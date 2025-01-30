@@ -14,8 +14,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Blog() {
-  const blogs = await getAllBlogs();
-  const data = blogs.map(({ component, ...meta }) => meta);
+  // const blogs = await getAllBlogs();
+  // const data = blogs.map(({ component, ...meta }) => meta);
 
   return (
     <Container>
@@ -25,7 +25,7 @@ export default async function Blog() {
         Ever since <Highlight> I was a kid</Highlight>, I&apos;ve been
         fascinated by technology.
       </Paragraph>
-      <Blogs blogs={data} />
+      {/* <Blogs blogs={data} /> */}
     </Container>
   );
 }

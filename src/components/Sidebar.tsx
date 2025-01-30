@@ -13,7 +13,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { IconLayoutSidebarRightCollapse } from "@tabler/icons-react";
 import { isMobile } from "@/lib/utils";
 
-export const Sidebar = () => {
+export const Sidebar = ({data}:{data:any}) => {
   const [open, setOpen] = useState(isMobile() ? false : true);
 
   return (
@@ -28,8 +28,8 @@ export const Sidebar = () => {
             className="px-6  z-[100] py-10 bg-neutral-100 max-w-[14rem] lg:w-fit  fixed lg:relative  h-screen left-0 flex flex-col justify-between"
           >
             <div className="flex-1 overflow-auto">
-              <SidebarHeader />
-              <Navigation setOpen={setOpen} />
+              <SidebarHeader profileImage={data?.profileImage?.image} fullName={data?.fullName} />
+              <Navigation setOpen={setOpen} socialLinks={data?.socialLinks} />
             </div>
             <div onClick={() => isMobile() && setOpen(false)}>
               <Badge href="/resume" text="Read Resume" />
@@ -49,8 +49,10 @@ export const Sidebar = () => {
 
 export const Navigation = ({
   setOpen,
+  socialLinks
 }: {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  socialLinks:any
 }) => {
   const pathname = usePathname();
 
@@ -81,7 +83,7 @@ export const Navigation = ({
       <Heading as="p" className="text-sm md:text-sm lg:text-sm pt-10 px-2">
         Socials
       </Heading>
-      {socials.map((link: Navlink) => (
+      {socialLinks?.map((link: Navlink) => (
         <Link
           key={link.href}
           href={link.href}
@@ -102,20 +104,23 @@ export const Navigation = ({
   );
 };
 
-const SidebarHeader = () => {
+const SidebarHeader = async ({fullName,profileImage}:{fullName:string, profileImage:string}) => {
+  
   return (
-    <div className="flex space-x-2">
-      <Image
-        src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1760&q=80"
-        alt="Avatar"
-        height="40"
-        width="40"
-        className="object-cover object-top rounded-full flex-shrink-0"
-      />
-      <div className="flex text-sm flex-col">
-        <p className="font-bold text-primary">Israfil Hossain</p>
-        <p className="font-light text-secondary">Developer</p>
+    <Link href="/profile">
+      <div className="flex space-x-2">
+        <Image
+          src={profileImage || "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1760&q=80"}
+          alt="Avatar"
+          height="40"
+          width="40"
+          className="object-cover object-top rounded-full flex-shrink-0"
+        />
+        <div className="flex text-sm flex-col">
+          <p className="font-bold text-primary">{fullName || ""}</p>
+          <p className="font-light text-secondary">Developer</p>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };

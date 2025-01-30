@@ -12,7 +12,7 @@ export const Products = () => {
   return (
     <div>
       <div className="grid grid-cols-1  gap-10">
-        {products.map((product: Product, idx: number) => (
+        {/* {products?.map((product: Product, idx: number) => (
           <motion.div
             key={product.href}
             initial={{
@@ -62,7 +62,7 @@ export const Products = () => {
               </div>
             </Link>
           </motion.div>
-        ))}
+        ))} */}
       </div>
     </div>
   );
