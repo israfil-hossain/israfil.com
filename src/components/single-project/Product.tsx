@@ -2,8 +2,8 @@
 import { Product } from "@/types/products";
 import Image, { StaticImageData } from "next/image";
 import React, { useState } from "react";
-import { Heading } from "./Heading";
-import { Paragraph } from "./Paragraph";
+import { Heading } from "../Heading";
+import { Paragraph } from "../Paragraph";
 import Link from "next/link";
 import { motion } from "framer-motion";
 

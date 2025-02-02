@@ -22,7 +22,8 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const profile = await getProfile();
+  const profile =  await getProfile();
+  console.log("profile : ", profile);
   
   return (
     <html lang="en">
@@ -32,7 +33,7 @@ export default async function RootLayout({
           "flex antialiased h-screen overflow-hidden bg-gray-100"
         )}
       >
-        <Sidebar data = {profile[0] || {}} />
+        <Sidebar data = {profile[0]} />
         <div className="lg:pl-2 lg:pt-2 bg-gray-100 flex-1 overflow-y-auto">
           <div className="flex-1 bg-white min-h-screen lg:rounded-tl-xl border border-transparent lg:border-neutral-200 overflow-y-auto">
             {children}

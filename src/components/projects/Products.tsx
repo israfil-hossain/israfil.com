@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
-import { Heading } from "./Heading";
+import { Heading } from "../Heading";
 import { Product } from "@/types/products";
 import { products } from "@/constants/products";
 import Link from "next/link";
 import Image from "next/image";
-import { Paragraph } from "./Paragraph";
+import { Paragraph } from "../Paragraph";
 import { motion } from "framer-motion";
 
 export const Products = () => {

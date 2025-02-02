@@ -7,7 +7,6 @@ import { useRouter, usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { Heading } from "./Heading";
-import { socials } from "@/constants/socials";
 import { Badge } from "./Badge";
 import { AnimatePresence, motion } from "framer-motion";
 import { IconLayoutSidebarRightCollapse } from "@tabler/icons-react";
@@ -15,7 +14,7 @@ import { isMobile } from "@/lib/utils";
 
 export const Sidebar = ({data}:{data:any}) => {
   const [open, setOpen] = useState(isMobile() ? false : true);
-
+  console.log("Profile data is : ",data); 
   return (
     <>
       <AnimatePresence>
@@ -83,7 +82,7 @@ export const Navigation = ({
       <Heading as="p" className="text-sm md:text-sm lg:text-sm pt-10 px-2">
         Socials
       </Heading>
-      {socialLinks?.map((link: Navlink) => (
+      {/* {socialLinks?.map((link: Navlink) => (
         <Link
           key={link.href}
           href={link.href}
@@ -97,14 +96,14 @@ export const Navigation = ({
               isActive(link.href) && "text-sky-500"
             )}
           />
-          <span>{link.label}</span>
+          <span>{link}</span>
         </Link>
-      ))}
+      ))} */}
     </div>
   );
 };
 
-const SidebarHeader = async ({fullName,profileImage}:{fullName:string, profileImage:string}) => {
+const SidebarHeader = ({fullName,profileImage}:{fullName:string, profileImage:string}) => {
   
   return (
     <Link href="/profile">

@@ -2,15 +2,19 @@ import { Container } from "@/components/Container";
 import { Heading } from "@/components/Heading";
 import { Highlight } from "@/components/Highlight";
 import { Paragraph } from "@/components/Paragraph";
-import { Products } from "@/components/Products";
+import { Products } from "@/components/projects/Products";
 import { TechStack } from "@/components/TechStack";
 import { getProfile } from "@/sanity/lib/query";
 import Image from "next/image";
 import Link from "next/link";
-import { IconBrandGithub, IconBrandLinkedin, IconBrandTwitter } from '@tabler/icons-react';
+import {
+  IconBrandGithub,
+  IconBrandLinkedin,
+  IconBrandTwitter,
+} from "@tabler/icons-react";
 export default async function Profile() {
   const profile = await getProfile();
-  console.log("Profile : ", profile); 
+  console.log("Profile : ", profile);
 
   const {
     fullName,
@@ -24,71 +28,97 @@ export default async function Profile() {
   } = profile[0] || {};
 
   return (
-    <Container>
-      <div className="flex flex-col items-center text-center">
+    <>
+      <div className="w-full flex flex-col justify-center items-center py-5">
         {/* Profile Image */}
-        <div className="relative w-32 h-32 overflow-hidden rounded-full bg-gray-200">
+        <div className="relative  flex items-center justify-center lg:w-80 w-32  lg:h-80 h-32 overflow-hidden rounded-full bg-gray-800  border-8 border-blue-50 ">
           {profileImage?.image ? (
             <Image
-              src={profileImage.image }
+              src={profileImage.image}
               alt={profileImage?.alt || "Profile Image"}
               fill
               className="object-cover"
             />
           ) : (
-            <span className="text-4xl text-gray-500">👤</span>
+            <span className="text-4xl text-gray-200">👤</span>
           )}
         </div>
-
-        {/* Headline */}
-        <Heading className="mt-4 font-black">{headline}</Heading>
-        <Paragraph className="text-gray-600">{shortBio}</Paragraph>
-
-        {/* Location */}
-        {location && (
-          <Paragraph className="text-sm text-gray-500 mt-1">
-            📍 {location}
-          </Paragraph>
-        )}
-
-        {/* Social Links */}
+        <div className=" py-4 items-center justify-center space-y-1">
+          <span className="text-3xl pr-3 text-yellow-500">👋 </span>
+          <Heading className="font-black">
+            Hi ! &nbsp; I&apos;m Israfil Hossain.
+          </Heading>
+          <Heading className="font-black" as= "h3">
+            Software Engineer Based on Bangladesh.{" "}
+          </Heading>
+          <div className="py-2">
+          <Paragraph className="text-sm text-gray-200 mt-1 text-10">
+             ✉️  {" Israfil166091@gmail.com"}
+            </Paragraph>
+            {location && (
+              <Paragraph className="text-sm text-gray-500 mt-1">
+                📍 {location}
+              </Paragraph>
+            )}
+            <Paragraph className="text-sm text-gray-500 mt-1">
+              📞 +880-1843566251
+            </Paragraph>
+            
+           
+          </div>
+            {/* Social Links */}
         <div className="flex space-x-4 mt-4">
           {socialLinks?.github && (
             <Link href={socialLinks.github} target="_blank">
-              <IconBrandGithub size={24} className="text-gray-700 hover:text-black" />
+              <IconBrandGithub
+                size={24}
+                className="text-gray-700 hover:text-black"
+              />
             </Link>
           )}
           {socialLinks?.twitter && (
             <Link href={socialLinks.twitter} target="_blank">
-              <IconBrandTwitter size={24} className="text-blue-500 hover:text-blue-700" />
+              <IconBrandTwitter
+                size={24}
+                className="text-blue-500 hover:text-blue-700"
+              />
             </Link>
           )}
           {socialLinks?.linkedin && (
             <Link href={socialLinks.linkedin} target="_blank">
-              <IconBrandLinkedin size={24} className="text-blue-600 hover:text-blue-800" />
+              <IconBrandLinkedin
+                size={24}
+                className="text-blue-600 hover:text-blue-800"
+              />
             </Link>
           )}
         </div>
+        </div>
       </div>
+      <Container>
+      
+        {/* Skills Section */}
+        <Heading as="h2" className="font-black text-lg ">
+          Skills
+        </Heading>
+        <div className="flex flex-wrap gap-2 mt-3">
+          {skills?.map((skill: any, index: number) => (
+            <span 
+              key={index}
+              className="px-3 py-1 bg-gray-200 rounded-lg text-sm"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
 
-      {/* Skills Section */}
-      <Heading as="h2" className="mt-10 font-black text-lg">
-        Skills
-      </Heading>
-      <div className="flex flex-wrap gap-2 mt-2">
-        {skills?.map((skill:any, index:number) => (
-          <span key={index} className="px-3 py-1 bg-gray-200 rounded-lg text-sm">
-            {skill}
-          </span>
-        ))}
-      </div>
-
-      {/* What I've been working on */}
-      <Heading as="h2" className="font-black text-lg mt-20 mb-4">
-        What I&apos;ve been working on
-      </Heading>
-      <Products />
-      <TechStack />
-    </Container>
+        {/* What I've been working on */}
+        <Heading as="h2" className="font-black text-lg mt-20 mb-4">
+          What I&apos;ve been working on
+        </Heading>
+        <Products />
+        <TechStack />
+      </Container>
+    </>
   );
 }
