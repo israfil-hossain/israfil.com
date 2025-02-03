@@ -41,12 +41,26 @@ export async function getProjects() {
   return client.fetch(
     groq`*[_type == "project"]{
       _id, 
-      name,
-      "slug": slug.current,
-      tagline,
-      "logo": logo.asset->url,
+      title, 
+      description,
+      href, 
+      thumbnail{
+        asset->{
+        id,
+        url
+      }
+      },
+      images[]{
+        asset->{
+          _id,
+          url
+        }
+      },
+      stack,
+      slug,
+      content
     }`
-  );
+  );  
 }
 
 export async function getSingleProject(slug: string) {
