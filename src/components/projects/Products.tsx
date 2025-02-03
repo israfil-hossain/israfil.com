@@ -2,7 +2,7 @@
 import React from "react";
 
 import { Product } from "@/types/products";
-import { products } from "@/constants/products";
+
 import Link from "next/link";
 import Image from "next/image";
 
@@ -29,13 +29,13 @@ export const Products = ({products}:{products:any}) => {
             transition={{ duration: 0.2, delay: idx * 0.1 }}
           >
             <Link
-              href={product?.slug ? `/projects/${product?.slug}` : product?.href}
+              href={product?.slug?.current ? `/projects/${product?.slug?.current}` : product?.href}
               key={product?.href}
               className="group flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 hover:bg-gray-50 rounded-2xl transition duration-200 pt-4"
             >
               <Image
-                src={product?.thumbnail}
-                alt="thumbnail"
+                src={product?.thumbnail?.asset?.url}
+                alt="product?.title"
                 height="200"
                 width="200"
                 className="rounded-md"

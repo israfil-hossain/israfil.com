@@ -8,10 +8,12 @@ import { Products } from "@/components/projects/Products";
 import { TechStack } from "@/components/TechStack";
 import { getProjects } from "@/sanity/lib/query";
 import useProfileStore from "@/store/profileStore";
+import useProjectsStore from "@/store/projectsStore";
 import { useEffect, useState } from "react";
 
 export default function HomeComponent() {
   const { profileData } = useProfileStore();
+  const { projectData, setProjectsData } = useProjectsStore(); 
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,6 +24,7 @@ export default function HomeComponent() {
         setIsLoading(true);
         const response = await getProjects();
         console.log("response", response);
+        setProjectsData(response)
         setIsLoading(false);
       } catch (error) {
         console.error("Failed to fetch profile data:", error);
@@ -30,7 +33,7 @@ export default function HomeComponent() {
     };
 
     fetchProjectData();
-  }, []);
+  }, [setProjectsData]);
 
   if (isLoading) {
     return "Loading .... ";
@@ -83,7 +86,7 @@ export default function HomeComponent() {
       <Heading as="h2" className="font-black text-lg mt-10 mb-4">
         What I&apos;ve been working on
       </Heading>
-      {/* <Products /> */}
+      <Products products={projectData} />
 
       <TechStack />
     </Container>

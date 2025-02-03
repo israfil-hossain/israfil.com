@@ -1,27 +1,19 @@
-import { Container } from "@/components/Container";
-import { Heading } from "@/components/Heading";
-import { Highlight } from "@/components/Highlight";
-import { Paragraph } from "@/components/Paragraph";
-import { Products } from "@/components/projects/Products";
+
+import ProjectComponent from "@/components/projects";
+import { getProjects } from "@/sanity/lib/query";
 import { Metadata } from "next";
-import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Projects | Israfil Hossain",
   description:
-    "Israfil Hossain is a developer, writer and speaker. He is a digital nomad and travels around the world while working remotely.",
+    "Israfil Hossain is a developer and writer. He is a digital nomad and travels around the world while working remotely.",
 };
 
-export default function Projects() {
-  return (
-    <Container>
-      <span className="text-4xl">⚡</span>
-      <Heading className="font-black mb-10">
-        {" "}
-        What I&apos;ve been working on
-      </Heading>
-
-      {/* <Products /> */}
-    </Container>
-  );
+export default async function Projects() {
+  const product = await getProjects();
+  
+  if (!product) {
+    return "No data available";
+  }
+  return <ProjectComponent product={product}/>
 }

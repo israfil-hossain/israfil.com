@@ -66,12 +66,25 @@ export async function getProjects() {
 export async function getSingleProject(slug: string) {
   return client.fetch(
     groq`*[_type == "project" && slug.current == $slug][0]{
-      _id,
-      name,
-      projectUrl,
-      coverImage { alt, "image": asset->url },
-      tagline,
-      description
+      _id, 
+      title, 
+      description,
+      href, 
+      thumbnail{
+        asset->{
+          id,
+          url
+        }
+      },
+      images[]{
+        asset->{
+          _id,
+          url
+        }
+      },
+      stack,
+      slug,
+      content
     }`,
     { slug }
   );

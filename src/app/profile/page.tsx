@@ -10,6 +10,7 @@ import Image from "next/image";
 
 import SocialLinks from "@/components/social-links/SocialLinks";
 import useProfileStore from "@/store/profileStore";
+import Link from "next/link";
 export default function Profile() {
   const { profileData } = useProfileStore();
 
@@ -50,6 +51,12 @@ export default function Profile() {
               📞 +880-1843566251
             </Paragraph>
             <SocialLinks profileData={profileData}  className="flex"/>
+            <Link
+                href={"/contact"}
+                className="bg-slate-900 w-32  text-center no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6 text-white inline-block"
+            > 
+            Hire me 
+            </Link>
           </div>
         </div>
       </div>

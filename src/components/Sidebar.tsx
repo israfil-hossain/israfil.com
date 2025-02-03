@@ -18,32 +18,32 @@ import SocialLinks from "./social-links/SocialLinks";
 
 
 export const Sidebar = () => {
-  
+
   const [open, setOpen] = useState(isMobile() ? false : true);
   const { profileData, setProfileData } = useProfileStore();
-  const [isLoading, setIsLoading] = useState(true); 
-  
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     // Fetch profile data from your API
     const fetchProfileData = async () => {
       try {
-        setIsLoading(true); 
+        setIsLoading(true);
         const response = await getProfile();
-        setProfileData(response[0]); 
-        setIsLoading(false); 
+        setProfileData(response[0]);
+        setIsLoading(false);
       } catch (error) {
         console.error('Failed to fetch profile data:', error);
-        setIsLoading(false); 
+        setIsLoading(false);
       }
     };
 
     fetchProfileData();
   }, [setProfileData]);
 
-  if(isLoading){
+  if (isLoading) {
     return "Loading .... "
   }
-  
+
   return (
     <>
       <AnimatePresence>
@@ -107,37 +107,40 @@ export const Navigation = ({
           <span>{link.label}</span>
         </Link>
       ))}
-
+       
       <Heading as="p" className="text-sm md:text-sm lg:text-sm pt-10 px-2">
         Socials
       </Heading>
-      <SocialLinks profileData={profileData || null }/>
+      <SocialLinks profileData={profileData || null} />
     </div>
   );
 };
 
-const SidebarHeader = ({fullName,profileImage}:{fullName:string | null, profileImage:string | null}) => {
-  
+const SidebarHeader = ({ fullName, profileImage }: { fullName: string | null, profileImage: string | null }) => {
+
   return (
     <Link href="/profile">
-      <div className="flex space-x-2 border-b-2 border-gray-500 pb-5 ">
+      <div className="flex space-x-2 border-b-2 border-gray-300 pb-5 ">
         <Image
           src={profileImage || "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1760&q=80"}
           alt="Avatar"
           height="40"
-          width="40" 
+          width="40"
           className="object-cover w-[44px] h-[45px] object-top rounded-full flex-shrink-0"
         />
-        <div className="flex text-sm flex-col mt-2">
-          <p className="font-bold text-primary">{fullName || "Israfil"}</p>
-          <div className="flex space-x-2 ">
-            <p className="font-light text-secondary text-[11px]">Developer</p>
-            <p className="text-[10px]">|</p>
-            <p className="font-light text-blue-400 text-[11px]">My Profile</p>
+        <div>
+          <div className="flex text-sm flex-col mt-2">
+            <p className="font-bold text-primary">{fullName || "Israfil"}</p>
+            <div className="flex space-x-2 ">
+              <p className="font-light text-secondary text-[11px]">Developer</p>
+              <p className="text-[10px]">|</p>
+              <p className="font-light text-blue-400 text-[11px]">My Profile</p>
+            </div>
           </div>
-          {/* <p className="font-bold text-primary">{fullName || ""}</p> */}
         </div>
       </div>
+      
+
     </Link>
   );
 };
