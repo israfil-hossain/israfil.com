@@ -21,7 +21,7 @@ export const Contact = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     // Write your submit logic here
-    console.log(formData);
+   
   };
   return (
     <form className="form" onSubmit={handleSubmit}>

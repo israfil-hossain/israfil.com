@@ -1,19 +1,25 @@
 "use client";
-import { Blog } from "@/types/blog";
 import Image from "next/image";
 import React, { useState } from "react";
 import { Heading } from "../Heading";
 import { Paragraph } from "../Paragraph";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
+import CustomPortableText from "./PortableText";
 
-export const Blogs = ({ blogs }: { blogs: Blog[] }) => {
+export const Blogs = ({ blogs }: { blogs: any }) => {
   const [hovered, setHovered] = useState<string | null>(null);
+  const [expandedBlog, setExpandedBlog] = useState<string | null>(null); // Track the expanded blog
+
+  const handleExpandClick = (slug: string) => {
+    setExpandedBlog(expandedBlog === slug ? null : slug); // Toggle the expanded blog
+  };
+
   return (
     <div className="max-w-5xl mx-auto my-10">
-      {blogs.map((blog, index) => (
+      {blogs.map((blog: any, index: any) => (
         <motion.div
-          key={blog.slug}
+          key={blog.slug?.current}
           initial={{
             opacity: 0,
             x: -50,
@@ -26,9 +32,9 @@ export const Blogs = ({ blogs }: { blogs: Blog[] }) => {
         >
           <Link
             key={`blog-${blog.title}`}
-            href={`/blog/${blog.slug}`}
+            href={`/blog/${blog.slug?.current}`}
             className="relative my-10 block"
-            onMouseEnter={() => setHovered(blog.slug)}
+            onMouseEnter={() => setHovered(blog.slug?.current)}
             onMouseLeave={() => setHovered(null)}
           >
             <AnimatePresence mode="wait">
@@ -46,18 +52,18 @@ export const Blogs = ({ blogs }: { blogs: Blog[] }) => {
                   }}
                   exit={{
                     opacity: 0,
-
                     scaleX: 0.95,
                     scaleY: 0.95,
                   }}
-                  className="absolute z-0 pointer-events-none bg-gray-50 inset-0 h-full w-full   rounded-md "
+                  className="absolute z-0 pointer-events-none bg-gray-50 inset-0 h-full w-full rounded-md"
                 />
               )}
             </AnimatePresence>
+
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative z-20">
               <Image
-                src={blog.image}
-                alt="thumbnail"
+                src={blog?.mainImage?.asset?.url || ""}
+                alt="blog?.slug?.current"
                 height="200"
                 width="200"
                 objectFit="cover"
@@ -67,16 +73,28 @@ export const Blogs = ({ blogs }: { blogs: Blog[] }) => {
                 <Heading className="text-lg md:text-lg lg:text-lg">
                   {blog.title}
                 </Heading>
+
+                {/* Display only a part of the content initially */}
                 <Paragraph className="text-sm md:text-sm lg:text-sm mt-2">
-                  {blog.description}
+                  <CustomPortableText value={blog.body.slice(0, 3)} /> {/* Slice to show 3-4 lines */}
+                  <button
+                    onClick={() => handleExpandClick(blog.slug)}
+                    className="mt-2 text-blue-600"
+                  >
+                    {expandedBlog === blog.slug?.current ? "Show Less" : "Read More"}
+                  </button>
                 </Paragraph>
+
+                {/* Button to toggle expanded view */}
+
+
                 <div className="flex space-x-2 flex-wrap mt-4">
-                  {blog.tags?.map((tag, index) => (
+                  {blog.categories?.map((tag: any, index: any) => (
                     <span
                       key={`tag-${blog.slug}`}
                       className="text-xs px-1 py-0.5 text-secondary border border-neutral-200 bg-white rounded-md"
                     >
-                      {tag}
+                      {tag?.title}
                     </span>
                   ))}
                 </div>

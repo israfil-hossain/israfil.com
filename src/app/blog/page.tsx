@@ -1,10 +1,9 @@
+import { Blogs } from "@/components/articles/Blogs";
 import { Container } from "@/components/Container";
 import { Heading } from "@/components/Heading";
 import { Highlight } from "@/components/Highlight";
 import { Paragraph } from "@/components/Paragraph";
-import { Products } from "@/components/projects/Products";
-import { getAllBlogs } from "../../../lib/getAllBlogs";
-import { Blogs } from "@/components/articles/Blogs";
+import { getPosts } from "@/sanity/lib/query";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -14,8 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Blog() {
-  // const blogs = await getAllBlogs();
-  // const data = blogs.map(({ component, ...meta }) => meta);
+  const blogs = await getPosts();
 
   return (
     <Container>
@@ -25,7 +23,10 @@ export default async function Blog() {
         Ever since <Highlight> I was a kid</Highlight>, I&apos;ve been
         fascinated by technology.
       </Paragraph>
-      {/* <Blogs blogs={data} /> */}
+      {
+        blogs?.length < 1 ? <h2> No Data Available ! </h2> : <Blogs blogs={blogs} />
+      }
+      
     </Container>
   );
 }

@@ -1,13 +1,15 @@
 "use client";
-import Head from "next/head";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { formatDate } from "../../lib/formatDate";
 import { Prose } from "@/components/Prose";
-import { Container } from "./Container";
-import { Heading } from "./Heading";
+
 import Link from "next/link";
-import { Paragraph } from "./Paragraph";
+import { Container } from "../Container";
+import { Heading } from "../Heading";
+import { Paragraph } from "../Paragraph";
+import { formatDate } from "../../../lib/formatDate";
+import { Highlight } from "../Highlight";
+
 
 function ArrowLeftIcon(props: any) {
   return (
@@ -44,23 +46,24 @@ export function BlogLayout({
           </Link>
 
           <Heading className=" py-4">{meta.title}</Heading>
-          <time
-            dateTime={meta.date}
-            className="flex items-center text-base text-zinc-400 "
-          >
+          
             <Paragraph className=" text-zinc-700">
-              {formatDate(meta.date)}
+              {formatDate(meta?.publishedAt)}
             </Paragraph>
-          </time>
+      
           <div className="w-full mt-4 aspect-w-16 aspect-h-10 bg-gray-100 rounded-lg overflow-hidden xl:aspect-w-16 xl:aspect-h-10 relative">
             <Image
-              src={meta.image}
+               src={meta?.mainImage?.asset?.url || ""}
               alt="thumbnail"
               height="800"
               width="800"
               className={`object-cover object-left-top w-full max-h-96`}
             />
           </div>
+          <Paragraph className=" text-zinc-700 mt-2 py-2 ">
+            <Highlight className="py-2 px-5 rounded-lg border">Author : {meta?.author}</Highlight>
+          </Paragraph>
+            
         </header>
         <Prose className="mt-8">{children}</Prose>
       </article>

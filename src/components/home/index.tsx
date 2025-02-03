@@ -23,7 +23,7 @@ export default function HomeComponent() {
       try {
         setIsLoading(true);
         const response = await getProjects();
-        console.log("response", response);
+        
         setProjectsData(response)
         setIsLoading(false);
       } catch (error) {
