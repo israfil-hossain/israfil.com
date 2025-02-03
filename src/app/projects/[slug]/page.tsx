@@ -1,13 +1,7 @@
 import { Container } from "@/components/Container";
-import { Heading } from "@/components/Heading";
-import { Highlight } from "@/components/Highlight";
-import { Paragraph } from "@/components/Paragraph";
-import { SingleProduct } from "@/components/Product";
-import { Products } from "@/components/Products";
-import { products } from "@/constants/products";
-import { Product } from "@/types/products";
+import { SingleProduct } from "@/components/single-project/Product";
+import { getSingleProject } from "@/sanity/lib/query";
 import { Metadata } from "next";
-import Image from "next/image";
 import { redirect } from "next/navigation";
 
 type Props = {
@@ -16,35 +10,34 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = params.slug;
-  const product = products.find((p) => p.slug === slug) as Product | undefined;
+  const product = await getSingleProject(slug);
+
   if (product) {
     return {
       title: product.title,
       description: product.description,
     };
-  } else {
-    return {
-      title: "Projects | Israfil Hossain",
-      description:
-        "Israfil Hossain is a developer, writer and speaker. He is a digital nomad and travels around the world while working remotely.",
-    };
   }
+
+  return {
+    title: "Projects | Israfil Hossain",
+    description:
+      "Israfil Hossain is a developer, writer, and speaker. He is a digital nomad and travels around the world while working remotely.",
+  };
 }
 
-export default function SingleProjectPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function SingleProjectPage({ params }: Props) {
   const slug = params.slug;
-  const product = products.find((p) => p.slug === slug);
+  const product = await getSingleProject(slug);
 
   if (!product) {
     redirect("/projects");
+    return null;
   }
+
   return (
     <Container>
-      <SingleProduct product={product} />
+      <SingleProduct project={product} />
     </Container>
   );
 }

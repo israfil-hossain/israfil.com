@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { twMerge } from "tailwind-merge";
 import { Footer } from "@/components/Footer";
+import { getProfile } from "@/sanity/lib/query";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
     "Israfil Hossain is a developer, writer. He is a digital nomad and travels around the world while working remotely.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;

@@ -2,7 +2,7 @@ import { Container } from "@/components/Container";
 import { Heading } from "@/components/Heading";
 import { Highlight } from "@/components/Highlight";
 import { Paragraph } from "@/components/Paragraph";
-import { Products } from "@/components/Products";
+import { Products } from "@/components/projects/Products";
 import { Metadata } from "next";
 import Image from "next/image";
 
@@ -12,7 +12,7 @@ import About from "@/components/About";
 export const metadata: Metadata = {
   title: "About | Israfil Hossain",
   description:
-    "Israfil Hossain is a developer, writer and speaker. He is a digital nomad and travels around the world while working remotely.",
+    "Israfil Hossain is a developer, writer. He is a digital nomad and travels around the world while working remotely.",
 };
 
 export default function AboutPage() {
