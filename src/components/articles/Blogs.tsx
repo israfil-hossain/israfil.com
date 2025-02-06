@@ -8,6 +8,8 @@ import Link from "next/link";
 import CustomPortableText from "./PortableText";
 
 export const Blogs = ({ blogs }: { blogs: any }) => {
+  console.log("Blogs : ", blogs); 
+
   const [hovered, setHovered] = useState<string | null>(null);
   const [expandedBlog, setExpandedBlog] = useState<string | null>(null); // Track the expanded blog
 
@@ -31,8 +33,8 @@ export const Blogs = ({ blogs }: { blogs: any }) => {
           transition={{ duration: 0.2, delay: index * 0.1 }}
         >
           <Link
-            key={`blog-${blog.title}`}
-            href={`/blog/${blog.slug?.current}`}
+            key={`blogs-${blog.title}`}
+            href={`/blogs/${blog.slug?.current}`}
             className="relative my-10 block"
             onMouseEnter={() => setHovered(blog.slug?.current)}
             onMouseLeave={() => setHovered(null)}

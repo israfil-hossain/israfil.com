@@ -23,7 +23,7 @@ export const navlinks = [
     icon: IconBriefcase2,
   },
   {
-    href: "/blog",
+    href: "/blogs",
     label: "Articles",
     icon: IconArticle,
   },
