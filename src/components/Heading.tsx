@@ -12,7 +12,7 @@ const CalSans = localFont({
 export const Heading = ({
   className,
   children,
-  as: Tag = "h2",
+  as: Tag = "h3",
 }: {
   className?: string;
   children: React.ReactNode;

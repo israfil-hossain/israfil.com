@@ -1,6 +1,6 @@
 import { Container } from "@/components/Container";
 import { SingleProduct } from "@/components/single-project/Product";
-import { getSingleProject } from "@/sanity/lib/query";
+import { getSingleProject } from "@/lib/query";
 import { redirect } from "next/navigation";
 
 

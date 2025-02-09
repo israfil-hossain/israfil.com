@@ -1,6 +1,7 @@
 
 import ProjectComponent from "@/components/projects";
-import { getProjects } from "@/sanity/lib/query";
+import { getProjects } from "@/lib/query";
+
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

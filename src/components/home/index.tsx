@@ -6,14 +6,16 @@ import { Highlight } from "@/components/Highlight";
 import { Paragraph } from "@/components/Paragraph";
 import { Products } from "@/components/projects/Products";
 import { TechStack } from "@/components/TechStack";
-import { getProjects } from "@/sanity/lib/query";
+import { getProjects } from "@/lib/query";
 import useProfileStore from "@/store/profileStore";
 import useProjectsStore from "@/store/projectsStore";
 import { useEffect, useState } from "react";
+import Loader from "../loader";
+import HireMeComponent from "../hireme";
 
 export default function HomeComponent() {
   const { profileData } = useProfileStore();
-  const { projectData, setProjectsData } = useProjectsStore(); 
+  const { projectData, setProjectsData } = useProjectsStore();
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -23,8 +25,8 @@ export default function HomeComponent() {
       try {
         setIsLoading(true);
         const response = await getProjects();
-        
-        setProjectsData(response)
+
+        setProjectsData(response);
         setIsLoading(false);
       } catch (error) {
         console.error("Failed to fetch profile data:", error);
@@ -36,12 +38,25 @@ export default function HomeComponent() {
   }, [setProjectsData]);
 
   if (isLoading) {
-    return "Loading .... ";
+    return (
+      <div className="w-full flex justify-center items-center py-20 h-[100vh]">
+        <Loader />
+      </div>
+    );
   }
 
   return (
     <Container>
-      <span className="text-4xl">👋</span>
+      <div className="flex space-x-2 items-center ">
+        <span className="text-4xl">👋</span>
+        <div
+          // onClick={()=> setIsButtonClicked(!isButtonClicked)}
+          className="bg-slate-900  px-5 text-center no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6 text-white inline-block"
+        >
+          Hire me Contract Base or Remotly 
+        </div>
+      </div>
+
       <Heading className="font-black">
         Hello there! I&apos;m {profileData?.fullName || "Israfil Hossain"}
       </Heading>
@@ -66,7 +81,7 @@ export default function HomeComponent() {
           </>
         )}
       </Paragraph>
-
+      
       {/* Skills Section */}
       <Heading as="h2" className="font-black text-lg mt-5">
         Skills

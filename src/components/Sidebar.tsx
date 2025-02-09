@@ -12,8 +12,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { IconLayoutSidebarRightCollapse } from "@tabler/icons-react";
 import { isMobile } from "@/lib/utils";
 import useProfileStore from "@/store/profileStore";
-import { getProfile } from "@/sanity/lib/query";
 import SocialLinks from "./social-links/SocialLinks";
+import { getProfile } from "@/lib/query";
 
 
 
@@ -40,10 +40,6 @@ export const Sidebar = () => {
     fetchProfileData();
   }, [setProfileData]);
 
-  if (isLoading) {
-    return "Loading .... "
-  }
-
   return (
     <>
       <AnimatePresence>
@@ -55,10 +51,14 @@ export const Sidebar = () => {
             exit={{ x: -200 }}
             className="px-6  z-[100] py-10 bg-neutral-100 max-w-[14rem] lg:w-fit  fixed lg:relative  h-screen left-0 flex flex-col justify-between"
           >
-            <div className="flex-1 overflow-auto">
-              <SidebarHeader profileImage={profileData?.profileImage?.image || "null"} fullName={profileData?.fullName || "Israfil Hossain"} />
+             <div className="flex-1 overflow-auto">
+            {
+              isLoading ? <div className="h-16 bg-gray-100 "></div> : 
+                <SidebarHeader profileImage={profileData?.profileImage?.image || "null"} fullName={profileData?.fullName || "Israfil Hossain"} />
+            }
               <Navigation setOpen={setOpen} />
             </div>
+            
             <div onClick={() => isMobile() && setOpen(false)}>
               <Badge href="/resume" text="Read Resume" />
             </div>
@@ -122,11 +122,11 @@ const SidebarHeader = ({ fullName, profileImage }: { fullName: string | null, pr
     <Link href="/profile">
       <div className="flex space-x-2 border-b-2 border-gray-300 pb-5 ">
         <Image
-          src={profileImage || "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1760&q=80"}
+          src={"/israfil-hossain-logo.png"}
           alt="Avatar"
-          height="40"
-          width="40"
-          className="object-cover w-[44px] h-[45px] object-top rounded-full flex-shrink-0"
+          height="50"
+          width="50"
+          className="object-cover w-[43px] h-[48px] object-top rounded-full flex-shrink-0"
         />
         <div>
           <div className="flex text-sm flex-col mt-2">

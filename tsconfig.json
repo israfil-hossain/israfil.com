@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/sanity/schemaTypes/authorType.js", "src/sanity/schemaTypes/blockContentType.js", "src/sanity/schemaTypes/postType.js", "src/sanity/schemaTypes/projects.js", "src/sanity/schemaTypes/categoryType.js", "src/sanity/schemaTypes/index.js", "src/sanity/schemaTypes/job.js", "src/sanity/schemaTypes/profile.js"],
   "exclude": ["node_modules"]
 }

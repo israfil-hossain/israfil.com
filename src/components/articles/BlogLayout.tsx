@@ -7,7 +7,7 @@ import Link from "next/link";
 import { Container } from "../Container";
 import { Heading } from "../Heading";
 import { Paragraph } from "../Paragraph";
-import { formatDate } from "../../../lib/formatDate";
+import { formatDate } from "../../lib/formatDate";
 import { Highlight } from "../Highlight";
 
 

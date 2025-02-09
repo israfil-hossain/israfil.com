@@ -21,6 +21,9 @@ const config: Config = {
         primary: "var(--neutral-700)",
         secondary: "var(--neutral-500)",
       },
+      animation: {
+        'spin-slow': 'spin 3s linear infinite',
+      },
     },
   },
   plugins: [require("@tailwindcss/typography"), addVariablesForColors],

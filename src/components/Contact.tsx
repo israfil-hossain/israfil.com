@@ -15,7 +15,7 @@ const defaultFormState = {
     error: "",
   },
 };
-export const Contact = () => {
+export const Contact = ({type}:{type?:any}) => {
   const [formData, setFormData] = useState(defaultFormState);
 
   const handleSubmit = (e: any) => {

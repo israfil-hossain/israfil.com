@@ -1,9 +1,9 @@
 import { BlogLayout } from "@/components/articles/BlogLayout";
 import CustomPortableText from "@/components/articles/PortableText";
 import { Container } from "@/components/Container";
-import { getSinglePost } from "@/sanity/lib/query";
 import { redirect } from "next/navigation";
 import { CodeWindow } from "@/components/CodeWindow";
+import { getSinglePost } from "@/lib/query";
 
 
 // Page component

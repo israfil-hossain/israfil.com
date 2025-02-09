@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { twMerge } from "tailwind-merge";
 import { Footer } from "@/components/Footer";
-import { getProfile } from "@/sanity/lib/query";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -12,9 +11,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Israfil Hossain - Developer",
+  title: "Israfil Hossain - Software Engineer",
   description:
-    "Israfil Hossain is a developer, writer. He is a digital nomad and travels around the world while working remotely.",
+    "Israfil Hossain is a Software Engineer, writer. He is a digital nomad and travels around the world while working remotely.",
 };
 
 export default async function RootLayout({
@@ -24,6 +23,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
+      <link rel="icon" href="/favicon.ico" sizes="any" />
       <body
         className={twMerge(
           inter.className,

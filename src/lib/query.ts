@@ -1,5 +1,6 @@
 import { groq } from "next-sanity";
-import { client } from "./client";
+import { client } from "./sanity";
+
 
 export async function getProfile() {
   return client.fetch(

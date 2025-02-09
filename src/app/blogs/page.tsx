@@ -3,7 +3,7 @@ import { Container } from "@/components/Container";
 import { Heading } from "@/components/Heading";
 import { Highlight } from "@/components/Highlight";
 import { Paragraph } from "@/components/Paragraph";
-import { getPosts } from "@/sanity/lib/query";
+import { getPosts } from "@/lib/query";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
