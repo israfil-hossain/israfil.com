@@ -7,6 +7,14 @@ const nextConfig = {
   experimental: {
     mdxRs: true,
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'https://ab0ypbx5.apicdn.sanity.io/:path*',
+      },
+    ];
+  },
 };
 
 
