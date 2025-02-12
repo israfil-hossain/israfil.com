@@ -53,7 +53,7 @@ export function BlogLayout({
       
           <div className="w-full mt-4 aspect-w-16 aspect-h-10 bg-gray-100 rounded-lg overflow-hidden xl:aspect-w-16 xl:aspect-h-10 relative">
             <Image
-               src={meta?.mainImage?.asset?.url || ""}
+               src={meta?.mainImage?.asset?.url || "/israfil-hossain-logo.png"}
               alt="thumbnail"
               height="800"
               width="800"

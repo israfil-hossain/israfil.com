@@ -11,7 +11,7 @@ import useProfileStore from "@/store/profileStore";
 import useProjectsStore from "@/store/projectsStore";
 import { useEffect, useState } from "react";
 import Loader from "../loader";
-import HireMeComponent from "../hireme";
+import Link from "next/link";
 
 export default function HomeComponent() {
   const { profileData } = useProfileStore();
@@ -49,12 +49,16 @@ export default function HomeComponent() {
     <Container>
       <div className="flex space-x-2 items-center ">
         <span className="text-4xl">👋</span>
-        <div
-          // onClick={()=> setIsButtonClicked(!isButtonClicked)}
-          className="bg-slate-900  px-5 text-center no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6 text-white inline-block"
-        >
-          Hire me Contract Base or Remotly 
-        </div>
+        
+        <Link href='/contact'
+          className="bg-green-800 px-6 text-center no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-xl p-px text-xs font-semibold leading-6 text-white inline-block">
+          {/* Ping animation element */}
+          <span className="absolute -top-2 -right-3 w-3 h-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-800 opacity-75"></span>
+            <span className="relative inline-flex rounded-full w-3 h-3 bg-green-500"></span>
+          </span>
+          Open to Work
+        </Link>
       </div>
 
       <Heading className="font-black">

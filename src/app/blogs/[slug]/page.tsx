@@ -4,12 +4,12 @@ import { Container } from "@/components/Container";
 import { redirect } from "next/navigation";
 import { CodeWindow } from "@/components/CodeWindow";
 import { getSinglePost } from "@/lib/query";
-
+import Head from "next/head";
 
 // Page component
-export default async function SingleBlogPage({ params }: {params: any}) {
+export default async function SingleBlogPage({ params }: { params: any }) {
   // Fetch the post using the slug
-  const post = await getSinglePost(params.slug);
+  const post = await getSinglePost(params?.slug);
 
   // Redirect if the post doesn't exist
   if (!post) {
@@ -29,8 +29,18 @@ export default async function SingleBlogPage({ params }: {params: any}) {
   });
 
   return (
-    <Container>
-      <BlogLayout meta={post}>{renderContent}</BlogLayout>
-    </Container>
+    <>
+      <Head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5494112348510404"
+          crossOrigin="anonymous"
+        ></script>
+      </Head>
+
+      <Container>
+        <BlogLayout meta={post}>{renderContent}</BlogLayout>
+      </Container>
+    </>
   );
 }

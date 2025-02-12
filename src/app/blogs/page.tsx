@@ -5,6 +5,7 @@ import { Highlight } from "@/components/Highlight";
 import { Paragraph } from "@/components/Paragraph";
 import { getPosts } from "@/lib/query";
 import { Metadata } from "next";
+import Head from "next/head";
 
 export const metadata: Metadata = {
   title: "Blogs | Israfil",
@@ -16,6 +17,13 @@ export default async function Blog() {
   const blogs = await getPosts();
 
   return (
+    <>
+    <Head>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5494112348510404"
+      crossOrigin="anonymous"></script>
+    </Head>
+    
+  
     <Container>
       <span className="text-4xl">📝</span>
       <Heading className="font-black pb-4">I write about technology</Heading>
@@ -28,5 +36,6 @@ export default async function Blog() {
       }
       
     </Container>
+    </>
   );
 }
