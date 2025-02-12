@@ -114,40 +114,35 @@ export const Contact = ({ type }: { type?: any }) => {
     }
   };
 
-  const onSubmit = async (
-    values: any,
-    { setSubmitting, resetForm }: { setSubmitting: any; resetForm: any }
-  ) => {
-    const scriptUrl = process.env.NEXT_PUBLIC_APPSCRIPT_URL || "https://script.google.com/macros/s/AKfycbwOzXYXsAfCIuYZz3GDp3BjjgtHVg5B16ma6tTA0DnCmWWtoxEFcUPCMZPyCAtQcIKf/exec";
-    
-    const formData = new URLSearchParams();
-    formData.append("entry.2005620554", values.name);
-    formData.append("entry.1045781291", values.email);
-    formData.append("entry.1065046570", values.location || "");
-    formData.append("entry.1166974658", values.phone);
-    formData.append("entry.839337160", values.message);
-
+  const onSubmit = async (values:any, { setSubmitting, resetForm }:{setSubmitting: any, resetForm: any}) => {
+    const scriptUrl = process.env.NEXT_PUBLIC_APPSCRIPT_URL || "https://script.google.com/macros/s/AKfycbznnJ3OVd5hvocaB9HRLuGjy4FhJMT1VEsXrIcsZqsnJvCkTGyKSvv-V8mYKy2hGtaC/exec";
+  
     try {
       const response = await fetch(scriptUrl, {
         method: "POST",
-        body: JSON.stringify(formData),
-        headers: {"Content-Type": "application/json", },
-        // mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
       });
-
-      if (response.status === 200) {
+  
+      const result = await response.json();
+      if (result.success) {
         toast.success("Form submitted successfully!");
+        resetForm();
       } else {
         toast.error("Error submitting form");
       }
     } catch (error) {
-      console.error("Error submitting the form:", error);
+      console.error("Error:", error);
       toast.error("Error submitting form");
     }
-
+  
     setSubmitting(false);
-    // resetForm();
   };
+  
+
+  
 
   return (
     <>

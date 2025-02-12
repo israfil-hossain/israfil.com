@@ -12,6 +12,7 @@ import useProjectsStore from "@/store/projectsStore";
 import { useEffect, useState } from "react";
 import Loader from "../loader";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function HomeComponent() {
   const { profileData } = useProfileStore();
@@ -70,6 +71,7 @@ export default function HomeComponent() {
         building scalable web apps that are performance optimized and good
         looking.
       </Paragraph>
+      
 
       <Paragraph className="max-w-xl mt-4">
         {profileData?.fullBio ? (
@@ -85,6 +87,7 @@ export default function HomeComponent() {
           </>
         )}
       </Paragraph>
+     
       
       {/* Skills Section */}
       <Heading as="h2" className="font-black text-lg mt-5">
