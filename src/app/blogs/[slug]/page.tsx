@@ -9,7 +9,7 @@ import Head from "next/head";
 // Page component
 export default async function SingleBlogPage({ params }: { params: any }) {
   // Fetch the post using the slug
-  const post = await getSinglePost(params?.slug);
+  const post = await getSinglePost(params?.slug || "");
 
   // Redirect if the post doesn't exist
   if (!post) {
