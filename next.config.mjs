@@ -7,6 +7,11 @@ const nextConfig = {
   experimental: {
     mdxRs: true,
   },
+  publicRuntimeConfig: {
+    CORS_ORIGIN: 'https://docs.google.com',
+
+},
+
   async rewrites() {
     return [
       {
