@@ -111,7 +111,7 @@ export const Contact = ({ type }: { type?: any }) => {
               <ErrorMessage name="message" component="div" className="text-red-500 text-sm mt-1" />
             </div>
             <button
-              className={`w-96 px-2 py-2 mt-4 rounded-md font-bold text-white transition-all ${
+              className={`mx-auto lg:w-[200px] w-[150px] items-center flex justify-center px-2 py-2 mt-4 rounded-md font-bold text-white transition-all ${
                 !isSubmitting
                   ? "bg-gradient-to-r from-indigo-800 to-purple-700 hover:from-indigo-900 hover:to-purple-900"
                   : "bg-neutral-300 cursor-not-allowed"
