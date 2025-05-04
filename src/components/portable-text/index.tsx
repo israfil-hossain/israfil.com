@@ -1,16 +1,19 @@
 // components/PortableTextComponents.tsx
 import React from "react";
 import { PortableTextComponents } from "@portabletext/react";
+import Image from "next/image";
 
 export const portableTextComponents: PortableTextComponents = {
   types: {
     image: ({ value }) => {
       const { asset, alt } = value;
       return (
-        <img
+        <Image
           src={asset?.url}
           alt={alt || "Rich text image"}
           className="my-4 rounded-lg shadow-md"
+          width={500}
+          height={500}
         />
       );
     },

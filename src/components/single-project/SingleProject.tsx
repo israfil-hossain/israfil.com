@@ -14,14 +14,13 @@ import { ArrowLeftIcon } from "../ui/arrow-left";
 
 export function SingleProduct({ slug }: { slug: string }) {
   const [isLoader,setIsLoading] = useState(false);
-
   const {
     data: project,
     isLoading,
     isError,
   } = useQuery({
     queryKey: ["single-project", slug],
-    queryFn: () => getSingleProject(slug),
+    queryFn: () =>  getSingleProject(slug),
   });
   
 
@@ -38,7 +37,7 @@ export function SingleProduct({ slug }: { slug: string }) {
 
 
 
-  if (isLoading || isLoader) return <Loader />;
+  if (!slug || isLoading || isLoader) return <Loader />;
   if (isError || !project) return <div>Something went wrong.</div>;
 
   return (

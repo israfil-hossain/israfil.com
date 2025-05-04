@@ -43,11 +43,11 @@ export default function About() {
       </div> */}
 
       <h2 className="text-lg md:text-4xl mb-4 text-black  max-w-4xl pt-5">
-      🔰 Hi, I'm Israfil Hossain — a passionate developer, creative writer, and
-        design enthusiast.
+      {`🔰 Hi, I'm Israfil Hossain — a passionate developer, creative writer, and
+        design enthusiast.`}
       </h2>
       <Paragraph>
-      🔰 <Highlight className="bg-yellow-100">Software Engineer with 3.5</Highlight>  years of experience in developing scalable
+       🔰 <Highlight className="bg-yellow-100">Software Engineer with 3.5 +</Highlight>  years of experience in developing scalable
         web applications in dynamic and collaborative Agile environments.
         <Highlight className="bg-blue-100">Expertise</Highlight>: JavaScript, React, Next.js, React Native, and state
         management tools including Zustand, Redux Toolkit, and Context API.
@@ -58,61 +58,62 @@ export default function About() {
         Architecture, Responsive Design, Performance Optimization (FCP and LCP),
         and Progressive Web Application Development, Strong Problem Solving
         skill, Delivery high quality product according to requirements .
+      
       </Paragraph>
 
       <TimelineDemo />
 
       <div className="max-w-4xl">
         <Paragraph className="mt-4">
-        🔰 Since the early days of my journey, I&apos;ve been captivated by the
+        {` 🔰 Since the early days of my journey, I've been captivated by the
           art of crafting exceptional digital experiences. As a developer, I
           thrive on turning lines of code into functional and elegant solutions.
           My goal is to not just create software, but to build digital marvels
-          that seamlessly merge form and function.
+          that seamlessly merge form and function.`}
         </Paragraph>
 
         <Paragraph className="mt-4">
-        🔰 But my journey doesn&apos;t stop at coding. With a heart full of words
-          and a mind brimming with ideas, I&apos;ve ventured into the realm of
+        {`🔰 But my journey doesn't stop at coding. With a heart full of words
+          and a mind brimming with ideas, I've ventured into the realm of
           writing. From tech articles that unravel complex concepts to creative
           tales that ignite the imagination, I weave words to inform, entertain,
-          and inspire.
+          and inspire.`}
         </Paragraph>
 
         <Paragraph className="mt-4">
-        🔰 What sets me apart is my unwavering appreciation for design. I believe
+        {`🔰 What sets me apart is my unwavering appreciation for design. I believe
           that aesthetics and usability go hand in hand. My eye for awesome
           design ensures that every project I undertake not only works
-          flawlessly under the hood but also looks stunning on the surface.
+          flawlessly under the hood but also looks stunning on the surface.`}
         </Paragraph>
 
         <Paragraph className="mt-4">
-        🔰 Beyond the screen, I love traveling and exploring new cultures—it
+        {`🔰 Beyond the screen, I love traveling and exploring new cultures—it
           fuels my creativity and brings fresh perspectives to my work. I also
           enjoy learning about new technologies and experimenting with ideas to
           build SaaS applications. These experiments not only sharpen my
           technical skills but bring me closer to my long-term goal of building
-          a startup that solves real-world problems.
+          a startup that solves real-world problems.`}
         </Paragraph>
 
         <Paragraph className="mt-4">
-        🔰 Through this website, I aim to share my insights, experiences, and
-          creations with you. Whether you&apos;re a fellow developer seeking
+        {`🔰 Through this website, I aim to share my insights, experiences, and
+          creations with you. Whether you're a fellow developer seeking
           solutions, a fellow writer in search of inspiration, or simply someone
-          who appreciates the finer aspects of design, there&apos;s something
-          here for you.
+          who appreciates the finer aspects of design, there's something
+          here for you.`}
         </Paragraph>
 
         <Paragraph className="mt-4">
-        🔰 Join me on this journey of bytes and narratives, logic and creativity,
+        {`🔰 Join me on this journey of bytes and narratives, logic and creativity,
           code and prose. Together, we can explore the boundless possibilities
           of technology and storytelling, all while reveling in the sheer beauty
-          of thoughtful design.
+          of thoughtful design.`}
         </Paragraph>
 
         <Paragraph className="mt-4">
-        🔰 Thank you for being here, and I can&apos;t wait to embark on this
-          adventure with you.
+        {`🔰 Thank you for being here, and I can't wait to embark on this
+          adventure with you.`}
         </Paragraph>
       </div>
     </div>

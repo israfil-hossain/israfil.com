@@ -29,7 +29,7 @@ export const Sidebar = () => {
       refetch();
       setProfileData(data);
     }
-  }, [setProfileData, data]);
+  }, [setProfileData, data,profileData,refetch]);
 
   if (isLoading) {
     return <Loader />;
