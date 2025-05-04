@@ -2,7 +2,7 @@
 
 const nextConfig = {
   images: {
-    domains: ["images.unsplash.com", "res.cloudinary.com", "cdn.sanity.io","canva.com"],
+    domains: ["images.unsplash.com","unsplash.com", "res.cloudinary.com", "cdn.sanity.io","canva.com"],
   },
   experimental: {
     mdxRs: true,

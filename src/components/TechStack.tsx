@@ -8,60 +8,70 @@ export const TechStack = () => {
     {
       title: "React Js",
       src: "/images/logos/reactjs.png",
-      className: "h-10 w-14",
+      className: "h-8 w-14",
     },
     {
       title: "Next.js",
       src: "/images/logos/next.png",
 
-      className: "h-10 w-14",
+      className: "h-8 w-14",
     },
-    // {
-    //   title: "AWS",
-    //   src: "/images/logos/aws.webp",
+    {
+      title: "AWS",
+      src: "/images/logos/aws.webp",
 
-    //   className: "h-10 w-10",
-    // },
+      className: "h-8 w-8",
+    },
     {
       title: "Figma",
       src: "/images/logos/figma.png",
 
-      className: "h-10 w-8",
+      className: "h-8 w-8",
     },
     {
       title: "Framer Motion",
       src: "/images/logos/framer.webp",
 
-      className: "h-10 w-10",
+      className: "h-8 w-8",
     },
     {
       title: "Node",
       src: "/images/logos/node.png",
 
-      className: "h-10 w-12",
+      className: "h-10 w-10",
     },
     {
       title: "Tailwind",
       src: "/images/logos/tailwind.png",
 
-      className: "h-10 w-24",
+      className: "h-8 w-10",
     },
     {
       title: "React Native",
       src: "/images/logos/reactnative.png",
-      className: "h-10 w-14",
+      className: "h-10 w-10",
+    },
+    {
+      title: "Sanity",
+      src: "/images/logos/sanity.png",
+      className: "h-10 w-10",
+    },
+    {
+      title: "Wordpress",
+      src: "/images/logos/wordpress.png",
+      className: "h-10 w-10",
     },
     {
       title: "Vercel",
       src: "/images/logos/vercel.png",
 
-      className: "h-10 w-24",
+      className: "h-8 w-10",
     },
     {
       title: "Docker",
       src: "/images/logos/docker.png",
 
-      className: "h-10 w-24",
+      className: "h-8 w-10",
     },
   ];
   return (
@@ -77,8 +87,8 @@ export const TechStack = () => {
           <Image
             src={item.src}
             key={item.src}
-            width={`200`}
-            height={`200`}
+            width={200}
+            height={150}
             alt={item.title}
             className={twMerge("object-contain mr-4 mb-4", item.className)}
           />

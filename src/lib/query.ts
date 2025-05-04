@@ -1,7 +1,6 @@
 import { groq } from "next-sanity";
 import { client } from "./sanity";
 
-
 export async function getProfile() {
   return client.fetch(
     groq`*[_type == "profile"]{
@@ -73,7 +72,7 @@ export async function getSingleProject(slug: string) {
       href, 
       thumbnail{
         asset->{
-          id,
+          _id,
           url
         }
       },
@@ -85,11 +84,15 @@ export async function getSingleProject(slug: string) {
       },
       stack,
       slug,
-      content
+      content,
+      isRunning,
+      showPortfolio,
+      needInvestment
     }`,
     { slug }
   );
 }
+
 
 export async function getPosts() {
   return client.fetch(

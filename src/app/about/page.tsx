@@ -1,7 +1,8 @@
+import About from "@/components/about";
 import { Container } from "@/components/Container";
 import { Heading } from "@/components/Heading";
+import { TimelineDemo } from "@/components/time-line";
 import { Metadata } from "next";
-import About from "@/components/About";
 
 export const metadata: Metadata = {
   title: "About | Israfil Hossain",

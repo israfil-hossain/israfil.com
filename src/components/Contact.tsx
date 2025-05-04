@@ -37,7 +37,6 @@ export const Contact = ({ type }: { type?: any }) => {
       });
 
       const result = await response;
-      console.log("result   ", result);
       if (result) {
         toast.success("Form submitted successfully!");
         resetForm();
@@ -48,7 +47,6 @@ export const Contact = ({ type }: { type?: any }) => {
       console.error("Error:", error);
       toast.error("Error submitting form");
     }
-
     setSubmitting(false);
   };
 
@@ -113,7 +111,7 @@ export const Contact = ({ type }: { type?: any }) => {
               <ErrorMessage name="message" component="div" className="text-red-500 text-sm mt-1" />
             </div>
             <button
-              className={`w-full px-2 py-2 mt-4 rounded-md font-bold text-white transition-all ${
+              className={`w-96 px-2 py-2 mt-4 rounded-md font-bold text-white transition-all ${
                 !isSubmitting
                   ? "bg-gradient-to-r from-indigo-800 to-purple-700 hover:from-indigo-900 hover:to-purple-900"
                   : "bg-neutral-300 cursor-not-allowed"

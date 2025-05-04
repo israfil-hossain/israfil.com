@@ -3,7 +3,7 @@ import { navlinks } from "@/constants/navlinks";
 import { Navlink } from "@/types/navlink";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { Heading } from "./Heading";
@@ -13,33 +13,27 @@ import { IconLayoutSidebarRightCollapse } from "@tabler/icons-react";
 import { isMobile } from "@/lib/utils";
 import useProfileStore from "@/store/profileStore";
 import SocialLinks from "./social-links/SocialLinks";
-import { getProfile } from "@/lib/query";
-
-
+import { useProfileData } from "@/services/profile";
+import Loader from "./ui/loader";
 
 export const Sidebar = () => {
+  const { data, isLoading, error, refetch } = useProfileData();
 
   const [open, setOpen] = useState(isMobile() ? false : true);
   const { profileData, setProfileData } = useProfileStore();
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch profile data from your API
-    const fetchProfileData = async () => {
-      try {
-        setIsLoading(true);
-        const response = await getProfile();
-        setProfileData(response[0]);
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Failed to fetch profile data:', error);
-        setIsLoading(false);
-      }
-    };
+    if (!profileData) {
+      setProfileData(data);
+    } else {
+      refetch();
+      setProfileData(data);
+    }
+  }, [setProfileData, data]);
 
-    fetchProfileData();
-  }, [setProfileData]);
-
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <>
       <AnimatePresence>
@@ -51,14 +45,18 @@ export const Sidebar = () => {
             exit={{ x: -200 }}
             className="px-6  z-[100] py-10 bg-neutral-100 max-w-[14rem] lg:w-fit  fixed lg:relative  h-screen left-0 flex flex-col justify-between"
           >
-             <div className="flex-1 overflow-auto">
-            {
-              isLoading ? <div className="h-16 bg-gray-100 "></div> : 
-                <SidebarHeader profileImage={profileData?.profileImage?.image || "null"} fullName={profileData?.fullName || "Israfil Hossain"} />
-            }
+            <div className="flex-1 overflow-auto">
+              {isLoading ? (
+                <div className="h-16 bg-gray-100 "></div>
+              ) : (
+                <SidebarHeader
+                  profileImage={profileData?.profileImage?.image || "null"}
+                  fullName={profileData?.fullName || "Israfil Hossain"}
+                />
+              )}
               <Navigation setOpen={setOpen} />
             </div>
-            
+
             <div onClick={() => isMobile() && setOpen(false)}>
               <Badge href="/resume" text="Read Resume" />
             </div>
@@ -66,7 +64,7 @@ export const Sidebar = () => {
         )}
       </AnimatePresence>
       <button
-        className="fixed lg:hidden bottom-4 right-4 h-8 w-8 border border-neutral-200 rounded-full backdrop-blur-sm flex items-center justify-center z-50"
+        className="fixed lg:hidden top-4 right-3 h-9 w-9 border border-neutral-200 rounded-full backdrop-blur-sm flex items-center justify-center z-50"
         onClick={() => setOpen(!open)}
       >
         <IconLayoutSidebarRightCollapse className="h-4 w-4 text-secondary" />
@@ -77,7 +75,6 @@ export const Sidebar = () => {
 
 export const Navigation = ({
   setOpen,
-
 }: {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
@@ -107,17 +104,22 @@ export const Navigation = ({
           <span>{link.label}</span>
         </Link>
       ))}
-       
+
       <Heading as="p" className="text-sm md:text-sm lg:text-sm pt-10 px-2">
         Socials
       </Heading>
-      <SocialLinks profileData={profileData || null} />
+      <SocialLinks label={true} />
     </div>
   );
 };
 
-const SidebarHeader = ({ fullName, profileImage }: { fullName: string | null, profileImage: string | null }) => {
-
+const SidebarHeader = ({
+  fullName,
+  profileImage,
+}: {
+  fullName: string | null;
+  profileImage: string | null;
+}) => {
   return (
     <Link href="/profile">
       <div className="flex space-x-2 border-b-2 border-gray-300 pb-5 ">
@@ -139,8 +141,6 @@ const SidebarHeader = ({ fullName, profileImage }: { fullName: string | null, pr
           </div>
         </div>
       </div>
-      
-
     </Link>
   );
 };

@@ -8,8 +8,6 @@ import Link from "next/link";
 import CustomPortableText from "./PortableText";
 
 export const Blogs = ({ blogs }: { blogs: any }) => {
-  console.log("Blogs : ", blogs); 
-
   const [hovered, setHovered] = useState<string | null>(null);
   const [expandedBlog, setExpandedBlog] = useState<string | null>(null); // Track the expanded blog
 

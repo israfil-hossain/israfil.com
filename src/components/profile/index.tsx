@@ -4,11 +4,13 @@ import SocialLinks from "@/components/social-links/SocialLinks";
 import Image from "next/image";
 import { Heading } from "../Heading";
 import { Paragraph } from "../Paragraph";
-import Link from "next/link";
 import { Contact } from "../Contact";
+import useProfileStore from "@/store/profileStore";
 
-const ProfileComponent = ({ profileData }: { profileData: any }) => {
+const ProfileComponent = () => {
+  const { profileData } = useProfileStore (); 
   const [isButtonClicked, setIsButtonClicked] = useState(false);
+
   return (
     <div>
       <div className="w-full flex flex-col justify-center items-center py-5 mb-48">
@@ -45,7 +47,7 @@ const ProfileComponent = ({ profileData }: { profileData: any }) => {
             <Paragraph className="text-sm text-gray-500 mt-1">
               📞 +880-1843566251
             </Paragraph>
-            <SocialLinks profileData={profileData} className="flex" />
+            <SocialLinks className="flex" />
 
             <div
               onClick={() => setIsButtonClicked(!isButtonClicked)}

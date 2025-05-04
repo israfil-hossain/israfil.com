@@ -3,6 +3,8 @@ import { Paragraph } from "@/components/Paragraph";
 import Image from "next/image";
 
 import { motion } from "framer-motion";
+import { TimelineDemo } from "../time-line";
+import { Highlight } from "../Highlight";
 
 export default function About() {
   const images = [
@@ -13,8 +15,8 @@ export default function About() {
   ];
   return (
     <div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-10 my-10">
-        {images.map((image, index) => (
+      {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-10 my-10">
+        {images?.map((image, index) => (
           <motion.div
             key={image}
             initial={{
@@ -38,50 +40,78 @@ export default function About() {
             />
           </motion.div>
         ))}
-      </div>
+      </div> */}
+
+      <h2 className="text-lg md:text-4xl mb-4 text-black  max-w-4xl pt-5">
+      🔰 Hi, I'm Israfil Hossain — a passionate developer, creative writer, and
+        design enthusiast.
+      </h2>
+      <Paragraph>
+      🔰 <Highlight className="bg-yellow-100">Software Engineer with 3.5</Highlight>  years of experience in developing scalable
+        web applications in dynamic and collaborative Agile environments.
+        <Highlight className="bg-blue-100">Expertise</Highlight>: JavaScript, React, Next.js, React Native, and state
+        management tools including Zustand, Redux Toolkit, and Context API.
+        Styling Proficiency: Tailwind CSS, ShadCn, Bootstrap,AntD Version
+        Control: Git, GitHub, GitLab, Bitbucket. Freelance Recognition:<Highlight className="bg-green-100">Level 2</Highlight> 
+        Freelance Software Developer on <Highlight className="bg-emerald-200">Fiverr</Highlight>, known for delivering
+        high-quality, client-focused solutions. Key Strengths: Component-Based
+        Architecture, Responsive Design, Performance Optimization (FCP and LCP),
+        and Progressive Web Application Development, Strong Problem Solving
+        skill, Delivery high quality product according to requirements .
+      </Paragraph>
+
+      <TimelineDemo />
 
       <div className="max-w-4xl">
-        <Paragraph className=" mt-4">
-          Hey there, I&apos;m Israfil Hossain - a passionate developer, avid writer,
-          and a connoisseur of awesome design. Welcome to my corner of the
-          digital world!
-        </Paragraph>
-        <Paragraph className=" mt-4">
-          Since the early days of my journey, I&apos;ve been captivated by the
+        <Paragraph className="mt-4">
+        🔰 Since the early days of my journey, I&apos;ve been captivated by the
           art of crafting exceptional digital experiences. As a developer, I
           thrive on turning lines of code into functional and elegant solutions.
           My goal is to not just create software, but to build digital marvels
           that seamlessly merge form and function.
         </Paragraph>
 
-        <Paragraph className=" mt-4">
-          But my journey doesn&apos;t stop at coding. With a heart full of words
+        <Paragraph className="mt-4">
+        🔰 But my journey doesn&apos;t stop at coding. With a heart full of words
           and a mind brimming with ideas, I&apos;ve ventured into the realm of
           writing. From tech articles that unravel complex concepts to creative
           tales that ignite the imagination, I weave words to inform, entertain,
           and inspire.
         </Paragraph>
-        <Paragraph className=" mt-4">
-          What sets me apart is my unwavering appreciation for design. I believe
+
+        <Paragraph className="mt-4">
+        🔰 What sets me apart is my unwavering appreciation for design. I believe
           that aesthetics and usability go hand in hand. My eye for awesome
           design ensures that every project I undertake not only works
           flawlessly under the hood but also looks stunning on the surface.
         </Paragraph>
-        <Paragraph className=" mt-4">
-          Through this website, I aim to share my insights, experiences, and
+
+        <Paragraph className="mt-4">
+        🔰 Beyond the screen, I love traveling and exploring new cultures—it
+          fuels my creativity and brings fresh perspectives to my work. I also
+          enjoy learning about new technologies and experimenting with ideas to
+          build SaaS applications. These experiments not only sharpen my
+          technical skills but bring me closer to my long-term goal of building
+          a startup that solves real-world problems.
+        </Paragraph>
+
+        <Paragraph className="mt-4">
+        🔰 Through this website, I aim to share my insights, experiences, and
           creations with you. Whether you&apos;re a fellow developer seeking
           solutions, a fellow writer in search of inspiration, or simply someone
           who appreciates the finer aspects of design, there&apos;s something
           here for you.
         </Paragraph>
-        <Paragraph className=" mt-4">
-          Join me on this journey of bytes and narratives, logic and creativity,
+
+        <Paragraph className="mt-4">
+        🔰 Join me on this journey of bytes and narratives, logic and creativity,
           code and prose. Together, we can explore the boundless possibilities
           of technology and storytelling, all while reveling in the sheer beauty
           of thoughtful design.
         </Paragraph>
-        <Paragraph className=" mt-4">
-          Thank you for being here, and I can&apos;t wait to embark on this
+
+        <Paragraph className="mt-4">
+        🔰 Thank you for being here, and I can&apos;t wait to embark on this
           adventure with you.
         </Paragraph>
       </div>

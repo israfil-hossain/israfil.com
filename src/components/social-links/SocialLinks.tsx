@@ -12,6 +12,7 @@ import {
 import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
 import { usePathname } from 'next/navigation';
+import useProfileStore from '@/store/profileStore';
 
 const iconComponents = {
   IconBrandGithub: IconBrandGithub,
@@ -21,8 +22,10 @@ const iconComponents = {
   IconBrandMedium: IconBrandMedium
 };
 
-const SocialLinks = ({ profileData,label = true, className}: { profileData: ProfileData | null, label?: Boolean, className?: any }) => {
+const SocialLinks = ({ label = true, className}: {  label?: Boolean, className?: any }) => {
    const pathname = usePathname();
+   const {profileData } = useProfileStore(); 
+  
   const isActive = (href: string) => pathname === href;
 
   return (
