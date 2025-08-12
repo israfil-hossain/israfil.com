@@ -14,8 +14,9 @@ import { useProjectData } from "@/services/project-data";
 import { Products } from "../projects/Products";
 import ErrorComponent from "../ui/error";
 import { Contact } from "../Contact";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
+import { WorkingProducts } from "../projects/ProductsWorking";
 
 export default function HomeComponent() {
   const { data: profileData, isLoading, error } = useProfileData();
@@ -24,6 +25,21 @@ export default function HomeComponent() {
     isLoading: projectLoading,
     error: projectError,
   } = useProjectData();
+
+
+  const runningProjects = useMemo(() => {
+    return (
+      projectData?.filter((project: any) => project.isRunning === true) || []
+    );
+  }, [projectData]);
+
+  const portfolioProjects = useMemo(() => {
+    return (
+      projectData?.filter((project: any) => project.showPortfolio === true) ||
+      []
+    );
+  }, [projectData]);
+
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   if (isLoading || projectLoading) {
@@ -131,9 +147,14 @@ export default function HomeComponent() {
 
       {/* What I've been working on */}
       <Heading as="h2" className="font-black text-lg mt-10 mb-4">
-        What I&apos;ve been working on
+        What I&apos;ve been Working !
       </Heading>
-      <Products products={projectData} />
+      <WorkingProducts products={runningProjects} />
+
+      <Heading as="h2" className="font-black text-lg mt-10 mb-4">
+        What I&apos;ve been Done
+      </Heading>
+      <Products products={portfolioProjects} />
 
       <TechStack />
     </Container>

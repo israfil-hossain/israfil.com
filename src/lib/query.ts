@@ -58,7 +58,13 @@ export async function getProjects() {
       },
       stack,
       slug,
-      content
+      content, 
+      isRunning, 
+      showFlowentech, 
+      showPortfolio,
+      needInvestment
+      
+
     }`
   );  
 }

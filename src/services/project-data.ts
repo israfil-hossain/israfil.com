@@ -1,5 +1,4 @@
-import { ProjectAPI } from '@/api/endpoint';
-import { getSingleProject } from '@/lib/query';
+import {  getProjects, getSingleProject } from '@/lib/query';
 import { Project } from '@/types/products';
 import { useQuery } from '@tanstack/react-query';
 
@@ -7,12 +6,13 @@ export const useProjectData = () => {
   return useQuery({
     queryKey: ['projectData'],
     queryFn: async () => {
-      const data = await ProjectAPI.GetProject;
-      return data; 
+      const data = await getProjects();
+      return data;
     },
-    staleTime: 1000 * 60 * 5, 
+    staleTime: 1000 * 60 * 5,
   });
 };
+
 
 
 
