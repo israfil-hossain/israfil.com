@@ -11,6 +11,7 @@ import Loader from "../ui/loader";
 import { Container } from "../Container";
 import Link from "next/link";
 import { ArrowLeftIcon } from "../ui/arrow-left";
+import { Testimonials } from "../testimonials/Testimonials";
 
 export function SingleProduct({ slug }: { slug: string }) {
   const [isLoader,setIsLoading] = useState(false);
@@ -89,16 +90,6 @@ export function SingleProduct({ slug }: { slug: string }) {
 
         <div className="flex lg:flex-row justify-between items-center flex-col mt-20">
           <Heading className="font-black mb-2 pb-1">{project?.title}</Heading>
-          {/* <div className="flex space-x-2 md:mb-1 mt-2 md:mt-0">
-                {project?.stack?.map((stack: string) => (
-                  <span
-                    key={stack}
-                    className="text-xs md:text-xs lg:text-xs bg-gray-50 px-2 py-1 rounded-sm text-secondary"
-                  >
-                    {stack}
-                  </span>
-                ))}
-              </div> */}
         </div>
 
         <div className="prose prose-sm md:prose-base max-w-none text-neutral-600">
@@ -133,6 +124,12 @@ export function SingleProduct({ slug }: { slug: string }) {
             </svg>
           </a>
         )}
+
+        <Testimonials
+          projectId={project._id}
+          testimonials={project.testimonials || []}
+          averageRating={project.averageRating || 0}
+        />
       </div>
     </Container>
   );

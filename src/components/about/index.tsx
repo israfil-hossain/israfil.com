@@ -1,8 +1,6 @@
 "use client";
 import { Paragraph } from "@/components/Paragraph";
-import Image from "next/image";
 
-import { motion } from "framer-motion";
 import { TimelineDemo } from "../time-line";
 import { Highlight } from "../Highlight";
 
@@ -15,39 +13,13 @@ export default function About() {
   ];
   return (
     <div>
-      {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-10 my-10">
-        {images?.map((image, index) => (
-          <motion.div
-            key={image}
-            initial={{
-              opacity: 0,
-              y: -50,
-              rotate: 0,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-              rotate: index % 2 === 0 ? 3 : -3,
-            }}
-            transition={{ duration: 0.2, delay: index * 0.1 }}
-          >
-            <Image
-              src={image}
-              width={200}
-              height={400}
-              alt="about"
-              className="rounded-md object-cover transform rotate-3 shadow-xl block w-full h-40 md:h-60 hover:rotate-0 transition duration-200"
-            />
-          </motion.div>
-        ))}
-      </div> */}
-
+      
       <h2 className="text-lg md:text-4xl mb-4 text-black  max-w-4xl pt-5">
       {`🔰 Hi, I'm Israfil Hossain — a passionate developer, creative writer, and
         design enthusiast.`}
       </h2>
       <Paragraph>
-       🔰 <Highlight className="bg-yellow-100">Software Engineer with 3.5 +</Highlight>  years of experience in developing scalable
+       🔰 <Highlight className="bg-yellow-100">Software Engineer with 4 </Highlight>  years of experience in developing scalable
         web applications in dynamic and collaborative Agile environments.
         <Highlight className="bg-blue-100">Expertise</Highlight>: JavaScript, React, Next.js, React Native, and state
         management tools including Zustand, Redux Toolkit, and Context API.

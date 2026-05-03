@@ -5,24 +5,25 @@ import { Highlight } from "@/components/Highlight";
 import { Paragraph } from "@/components/Paragraph";
 import { getPosts } from "@/lib/query";
 import { Metadata } from "next";
-import Head from "next/head";
+import Script from "next/script";
+import { generatePageMeta, SITE_URL } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Blogs | Israfil",
-  description:
-    "Israfil Hossain is a developer, writer and speaker. He is a digital nomad and travels around the world while working remotely.",
-};
+export const metadata: Metadata = generatePageMeta({
+  title: "Blog - Technology, Web Development & Remote Work",
+  description: "Read articles about web development, JavaScript, React, Next.js, remote work, and technology trends by Israfil Hossain.",
+  path: "/blogs",
+});
 
 export default async function Blog() {
   const blogs = await getPosts();
 
   return (
     <>
-    <Head>
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5494112348510404"
-      crossOrigin="anonymous"></script>
-    </Head>
-    
+    <Script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5494112348510404"
+      strategy="afterInteractive"
+    />
   
     <Container>
       <span className="text-4xl">📝</span>

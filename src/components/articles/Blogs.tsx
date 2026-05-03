@@ -9,52 +9,46 @@ import CustomPortableText from "./PortableText";
 
 export const Blogs = ({ blogs }: { blogs: any }) => {
   const [hovered, setHovered] = useState<string | null>(null);
-  const [expandedBlog, setExpandedBlog] = useState<string | null>(null); // Track the expanded blog
+  const [expandedBlog, setExpandedBlog] = useState<string | null>(null);
 
   const handleExpandClick = (slug: string) => {
-    setExpandedBlog(expandedBlog === slug ? null : slug); // Toggle the expanded blog
+    setExpandedBlog(expandedBlog === slug ? null : slug);
+  };
+
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] as const } },
   };
 
   return (
-    <div className="max-w-5xl mx-auto my-10">
-      {blogs.map((blog: any, index: any) => (
-        <motion.div
-          key={blog.slug?.current}
-          initial={{
-            opacity: 0,
-            x: -50,
-          }}
-          animate={{
-            opacity: 1,
-            x: 0,
-          }}
-          transition={{ duration: 0.2, delay: index * 0.1 }}
-        >
+    <motion.div
+      className="max-w-5xl mx-auto my-10"
+      variants={container}
+      initial="hidden"
+      animate="show"
+    >
+      {blogs.map((blog: any) => (
+        <motion.div key={blog.slug?.current} variants={item}>
           <Link
-            key={`blogs-${blog.title}`}
             href={`/blogs/${blog.slug?.current}`}
             className="relative my-10 block"
             onMouseEnter={() => setHovered(blog.slug?.current)}
             onMouseLeave={() => setHovered(null)}
           >
             <AnimatePresence mode="wait">
-              {hovered === blog.slug && (
+              {hovered === blog.slug?.current && (
                 <motion.div
-                  initial={{
-                    opacity: 0,
-                    scaleX: 0.95,
-                    scaleY: 0.95,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    scaleX: 1.05,
-                    scaleY: 1.2,
-                  }}
-                  exit={{
-                    opacity: 0,
-                    scaleX: 0.95,
-                    scaleY: 0.95,
-                  }}
+                  initial={{ opacity: 0, scaleX: 0.95, scaleY: 0.95 }}
+                  animate={{ opacity: 1, scaleX: 1.05, scaleY: 1.2 }}
+                  exit={{ opacity: 0, scaleX: 0.95, scaleY: 0.95 }}
                   className="absolute z-0 pointer-events-none bg-gray-50 inset-0 h-full w-full rounded-md"
                 />
               )}
@@ -63,7 +57,7 @@ export const Blogs = ({ blogs }: { blogs: any }) => {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative z-20">
               <Image
                 src={blog?.mainImage?.asset?.url || ""}
-                alt="blog?.slug?.current"
+                alt={blog?.mainImage?.alt || blog.title}
                 height="200"
                 width="200"
                 objectFit="cover"
@@ -73,25 +67,23 @@ export const Blogs = ({ blogs }: { blogs: any }) => {
                 <Heading className="text-lg md:text-lg lg:text-lg">
                   {blog.title}
                 </Heading>
-
-                {/* Display only a part of the content initially */}
                 <Paragraph className="text-sm md:text-sm lg:text-sm mt-2">
-                  <CustomPortableText value={blog.body.slice(0, 3)} /> {/* Slice to show 3-4 lines */}
+                  <CustomPortableText value={blog.body.slice(0, 3)} />
                   <button
-                    onClick={() => handleExpandClick(blog.slug)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleExpandClick(blog.slug?.current);
+                    }}
                     className="mt-2 text-blue-600"
                   >
                     {expandedBlog === blog.slug?.current ? "Show Less" : "Read More"}
                   </button>
                 </Paragraph>
 
-                {/* Button to toggle expanded view */}
-
-
                 <div className="flex space-x-2 flex-wrap mt-4">
-                  {blog.categories?.map((tag: any, index: any) => (
+                  {blog.categories?.map((tag: any) => (
                     <span
-                      key={`tag-${blog.slug}`}
+                      key={tag?.title}
                       className="text-xs px-1 py-0.5 text-secondary border border-neutral-200 bg-white rounded-md"
                     >
                       {tag?.title}
@@ -103,6 +95,6 @@ export const Blogs = ({ blogs }: { blogs: any }) => {
           </Link>
         </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 };

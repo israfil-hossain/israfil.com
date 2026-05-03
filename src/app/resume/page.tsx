@@ -1,4 +1,12 @@
 import React from 'react';
+import { Metadata } from "next";
+import { generatePageMeta } from "@/lib/seo";
+
+export const metadata: Metadata = generatePageMeta({
+  title: "Resume - Full-Stack Software Engineer",
+  description: "View or download the resume of Israfil Hossain, a full-stack software engineer with expertise in Next.js, React, TypeScript, and modern web technologies.",
+  path: "/resume",
+});
 
 type Props = {};
 

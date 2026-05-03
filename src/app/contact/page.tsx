@@ -4,12 +4,13 @@ import { Heading } from "@/components/Heading";
 import { Highlight } from "@/components/Highlight";
 import { Paragraph } from "@/components/Paragraph";
 import { Metadata } from "next";
+import { generatePageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact | Israfil Hossain",
-  description:
-    "Israfil Hossain is a developer, writer and speaker. He is a digital nomad and travels around the world while working remotely.",
-};
+export const metadata: Metadata = generatePageMeta({
+  title: "Contact - Get in Touch for Remote Work & Collaboration",
+  description: "Contact Israfil Hossain for remote software engineering opportunities, freelance projects, or collaborations. Based in Dhaka, Bangladesh, available worldwide.",
+  path: "/contact",
+});
 
 export default function Projects() {
   return (
