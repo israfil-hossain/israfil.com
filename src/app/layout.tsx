@@ -8,9 +8,9 @@ import { Footer } from "@/components/Footer";
 import { Toaster } from "react-hot-toast";
 import { ReactQueryProvider } from "@/provider/react-query-provider";
 import { FloatingNavbar } from "@/components/floating-navbar";
-import SocialLinks from "@/components/social-links/SocialLinks";
 import Script from "next/script";
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, personSchema, websiteSchema } from "@/lib/seo";
+import { getProfile } from "@/lib/query";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -57,11 +57,14 @@ export const metadata: Metadata = {
 
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const profileData = await getProfile();
+  const profile = profileData?.[0] || null;
+
   return (
     <html lang="en">
       <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -86,7 +89,7 @@ export default function RootLayout({
           }}
         />
         <ReactQueryProvider>
-        <Sidebar />
+        <Sidebar profileData={profile} />
         <Toaster position="top-right" />
         <main className="lg:pl-2 lg:pt-2 bg-gray-100 flex-1 overflow-y-auto w-full ">
           <div className="flex-1 bg-white min-h-screen lg:rounded-tl-xl border border-transparent lg:border-neutral-200 overflow-y-auto lg:mb-0 mb-10">

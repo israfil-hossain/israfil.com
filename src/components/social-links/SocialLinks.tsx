@@ -12,7 +12,6 @@ import {
 import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
 import { usePathname } from 'next/navigation';
-import useProfileStore from '@/store/profileStore';
 
 const iconComponents = {
   IconBrandGithub: IconBrandGithub,
@@ -22,15 +21,20 @@ const iconComponents = {
   IconBrandMedium: IconBrandMedium
 };
 
-const SocialLinks = ({ label = true, className}: {  label?: Boolean, className?: any }) => {
-   const pathname = usePathname();
-   const {profileData } = useProfileStore(); 
-  
-  const isActive = (href: string) => pathname === href;
+interface SocialLinksProps {
+  socialLinks?: ProfileData['socialLinks'];
+  label?: boolean;
+  className?: any;
+}
 
-  return (
+const SocialLinks = ({ socialLinks, label = true, className}: SocialLinksProps) => {
+   const pathname = usePathname();
+   
+   const isActive = (href: string) => pathname === href;
+
+   return (
     <div className={className}>
-     {profileData?.socialLinks?.map((link) => {
+     {socialLinks?.map((link) => {
         const IconComponent = iconComponents[link.icon as keyof typeof iconComponents];
         return(
         <Link
@@ -44,7 +48,7 @@ const SocialLinks = ({ label = true, className}: {  label?: Boolean, className?:
           {IconComponent && <IconComponent  className={twMerge(
               "h-4 w-4 flex-shrink-0",
               isActive(link.href) && "text-sky-500"
-            )}/>} {/* Render the icon if it exists */}
+            )}/>}
           { label && <span>{link?.label}</span>}
           
         </Link>

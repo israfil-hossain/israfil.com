@@ -5,7 +5,6 @@ import {
   IconBriefcase2,
   IconMail,
   IconMessage2,
-  IconCreditCard,
 } from "@tabler/icons-react";
 
 export const navlinks = [
@@ -41,10 +40,4 @@ export const navlinks = [
   },
 ];
 
-export const utilityLinks = [
-  {
-    href: "/subscription",
-    label: "Subscription",
-    icon: IconCreditCard,
-  },
-];
+export const utilityLinks = [];

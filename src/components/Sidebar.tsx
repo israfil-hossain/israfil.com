@@ -13,27 +13,23 @@ import { IconLayoutSidebarRightCollapse } from "@tabler/icons-react";
 import { isMobile } from "@/lib/utils";
 import useProfileStore from "@/store/profileStore";
 import SocialLinks from "./social-links/SocialLinks";
-import { useProfileData } from "@/services/profile";
-import Loader from "./ui/loader";
+import { ProfileData } from "@/store/type/ProfileData";
 
-export const Sidebar = () => {
-  const { data, isLoading, error, refetch } = useProfileData();
+interface SidebarProps {
+  profileData: ProfileData | null;
+}
 
+export const Sidebar = ({ profileData: serverProfileData }: SidebarProps) => {
   const [open, setOpen] = useState(isMobile() ? false : true);
   const { profileData, setProfileData } = useProfileStore();
 
   useEffect(() => {
-    if (!profileData) {
-      setProfileData(data);
-    } else {
-      refetch();
-      setProfileData(data);
+    if (serverProfileData) {
+      setProfileData(serverProfileData);
     }
-  }, [setProfileData, data,profileData,refetch]);
+  }, [serverProfileData, setProfileData]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  const displayProfile = serverProfileData || profileData;
   return (
     <>
       <AnimatePresence>
@@ -46,15 +42,11 @@ export const Sidebar = () => {
             className="px-6  z-[100] py-10 bg-neutral-100 max-w-[14rem] lg:w-fit  fixed lg:relative  h-screen left-0 flex flex-col justify-between"
           >
             <div className="flex-1 overflow-auto">
-              {isLoading ? (
-                <div className="h-16 bg-gray-100 "></div>
-              ) : (
-                <SidebarHeader
-                  profileImage={profileData?.profileImage?.image || "null"}
-                  fullName={profileData?.fullName || "Israfil Hossain"}
-                />
-              )}
-              <Navigation setOpen={setOpen} />
+              <SidebarHeader
+                profileImage={displayProfile?.profileImage?.image || "null"}
+                fullName={displayProfile?.fullName || "Israfil Hossain"}
+              />
+              <Navigation setOpen={setOpen} socialLinks={displayProfile?.socialLinks} />
               <UtilityNavigation setOpen={setOpen} />
             </div>
 
@@ -76,11 +68,12 @@ export const Sidebar = () => {
 
 export const Navigation = ({
   setOpen,
+  socialLinks,
 }: {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  socialLinks?: ProfileData['socialLinks'];
 }) => {
   const pathname = usePathname();
-  const { profileData } = useProfileStore();
 
   const isActive = (href: string) => pathname === href;
 
@@ -111,7 +104,7 @@ export const Navigation = ({
       <Heading as="p" className="text-sm md:text-sm lg:text-sm pt-10 px-2">
         Socials
       </Heading>
-      <SocialLinks label={true} />
+      <SocialLinks socialLinks={socialLinks} label={true} />
     </div>
   );
 };

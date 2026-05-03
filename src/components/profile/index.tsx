@@ -47,7 +47,7 @@ const ProfileComponent = () => {
             <Paragraph className="text-sm text-gray-500 mt-1">
               📞 +880-1843566251
             </Paragraph>
-            <SocialLinks className="flex" />
+            <SocialLinks socialLinks={profileData?.socialLinks} className="flex" />
 
             <div
               onClick={() => setIsButtonClicked(!isButtonClicked)}
