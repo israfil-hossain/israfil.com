@@ -2,6 +2,8 @@
 import ProjectComponent from "@/components/projects";
 import { getProjects } from "@/lib/query";
 
+export const revalidate = 60
+
 import { Metadata } from "next";
 import { generatePageMeta } from "@/lib/seo";
 

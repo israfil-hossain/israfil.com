@@ -7,6 +7,8 @@ import { Heading } from '@/components/Heading'
 import { Paragraph } from '@/components/Paragraph'
 import { Highlight } from '@/components/Highlight'
 
+export const revalidate = 60
+
 export const metadata: Metadata = generatePageMeta({
   title: "My Notes - Learning Materials",
   description: "Study notes, tutorials, and learning materials covering web development, programming, and technology topics.",

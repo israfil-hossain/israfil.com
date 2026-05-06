@@ -8,6 +8,8 @@ import { Metadata } from "next";
 import Script from "next/script";
 import { generatePageMeta, SITE_URL } from "@/lib/seo";
 
+export const revalidate = 60
+
 export const metadata: Metadata = generatePageMeta({
   title: "Blog - Technology, Web Development & Remote Work",
   description: "Read articles about web development, JavaScript, React, Next.js, remote work, and technology trends by Israfil Hossain.",

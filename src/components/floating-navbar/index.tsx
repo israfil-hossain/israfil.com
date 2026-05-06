@@ -7,6 +7,7 @@ import {
   IconTerminal2,
   IconBlockquote,
   IconAddressBook,
+  IconBook,
 } from "@tabler/icons-react";
 import useProfileStore from "@/store/profileStore";
 
@@ -35,6 +36,13 @@ export function FloatingNavbar() {
         <IconTerminal2 className="h-full w-full text-neutral-800" />
       ),
       href: "/projects",
+    },
+    {
+      label: "Courses",
+      icon: (
+        <IconBook className="h-full w-full text-neutral-800" />
+      ),
+      href: "/courses",
     },
     {
       label: "Articles",

@@ -146,7 +146,7 @@ export default function HomeComponent({ profileData: serverProfileData, projectD
         What I&apos;ve been Working On
       </Heading>
       {runningProjects.length > 0 ? (
-        <WorkingProducts products={runningProjects} />
+        <Products products={runningProjects} />
       ) : (
         <Paragraph className="text-secondary text-sm">
           No projects currently in progress.

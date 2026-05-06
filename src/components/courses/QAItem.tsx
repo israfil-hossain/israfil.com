@@ -1,16 +1,47 @@
 "use client";
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { PortableText } from '@portabletext/react'
 
 const portableTextComponents = {
   types: {
-    code: ({ value }: any) => (
-      <pre className="overflow-x-auto rounded-lg bg-slate-900 p-4 text-sm text-slate-300">
-        <code>{value.code}</code>
-      </pre>
-    ),
+    code: ({ value }: any) => {
+      const codeContent = value?.code || value || ''
+      const lang = value?.language || 'javascript'
+      return <CodeBlock code={codeContent} language={lang} />
+    },
   },
+}
+
+function CodeBlock({ code, language }: { code: string; language?: string }) {
+  const [buttonText, setButtonText] = useState('Copy')
+  const codeRef = useRef<HTMLElement>(null)
+
+  const handleCopy = () => {
+    if (codeRef.current) {
+      navigator.clipboard.writeText(code).then(() => {
+        setButtonText('Copied!')
+        setTimeout(() => setButtonText('Copy'), 1000)
+      })
+    }
+  }
+
+  return (
+    <div className="relative overflow-hidden rounded-lg bg-slate-900 my-4">
+      <div className="flex items-center justify-between bg-slate-800 px-4 py-2">
+        <span className="text-xs font-medium text-emerald-400">{language}</span>
+        <button
+          onClick={handleCopy}
+          className="text-xs text-slate-400 hover:text-white transition-colors"
+        >
+          {buttonText}
+        </button>
+      </div>
+      <pre className="overflow-x-auto p-4 text-sm text-slate-300">
+        <code ref={codeRef}>{code}</code>
+      </pre>
+    </div>
+  )
 }
 
 interface QAItemProps {

@@ -293,7 +293,8 @@ export async function getCourses() {
       },
       category,
       publishedAt,
-      order
+      order,
+      "topics": topics[]->{_id, title}
     }`
   );
 }

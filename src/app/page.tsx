@@ -1,3 +1,5 @@
+export const revalidate = 60
+
 import HomeComponent from "@/components/home";
 import { Metadata } from "next";
 import { generatePageMeta } from "@/lib/seo";

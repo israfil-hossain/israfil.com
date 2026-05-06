@@ -2,15 +2,18 @@
 
 const nextConfig = {
   images: {
-    domains: ["images.unsplash.com","unsplash.com", "res.cloudinary.com", "cdn.sanity.io","canva.com"],
+    remotePatterns: [
+      { hostname: "images.unsplash.com" },
+      { hostname: "unsplash.com" },
+      { hostname: "res.cloudinary.com" },
+      { hostname: "cdn.sanity.io" },
+      { hostname: "canva.com" },
+      { hostname: "**.sanity.io" },
+    ],
   },
   experimental: {
     mdxRs: true,
   },
-  publicRuntimeConfig: {
-    CORS_ORIGIN: 'https://docs.google.com',
-
-},
 
   async rewrites() {
     return [

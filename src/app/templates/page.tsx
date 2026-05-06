@@ -7,6 +7,8 @@ import { Paragraph } from "@/components/Paragraph";
 import { Highlight } from "@/components/Highlight";
 import { TemplatesGrid } from "@/components/templates/TemplatesGrid";
 
+export const revalidate = 60
+
 export const metadata: Metadata = generatePageMeta({
   title: "Templates - Ready-to-Use Web Templates",
   description: "Browse professionally designed, production-ready templates for SaaS, e-commerce, portfolios, and more. Built with modern tech stacks.",
