@@ -94,7 +94,7 @@ export function SingleProduct({ slug }: { slug: string }) {
 
         <div className="prose prose-sm md:prose-base max-w-none text-neutral-600">
           <PortableText
-            value={project?.content}
+            value={Array.isArray(project?.content) ? project?.content : [project?.content]}
             components={portableTextComponents}
           />
         </div>

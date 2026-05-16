@@ -77,17 +77,9 @@ export default async function SingleBlogPage({ params }: Props) {
     redirect("/blog");
   }
 
-  // Render content based on the post's body
-  const renderContent = post.body.map((block: any, index: number) => {
-    if (block._type === "code") {
-      return (
-        <CodeWindow key={index} title={block.language}>
-          <pre>{block.code}</pre>
-        </CodeWindow>
-      );
-    }
-    return <CustomPortableText key={index} value={block} />;
-  });
+  const renderContent = (
+    <CustomPortableText value={post.body} />
+  );
 
   return (
     <>

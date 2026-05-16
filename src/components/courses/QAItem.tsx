@@ -1,15 +1,40 @@
 "use client";
 
-import { useState, useRef } from 'react'
+import { useState, useRef, type ReactNode } from 'react'
 import { PortableText } from '@portabletext/react'
 
 const portableTextComponents = {
   types: {
     code: ({ value }: any) => {
-      const codeContent = value?.code || value || ''
-      const lang = value?.language || 'javascript'
-      return <CodeBlock code={codeContent} language={lang} />
+      if (!value || typeof value !== 'object') return null;
+      const codeContent = value?.code || '';
+      const lang = value?.language || 'javascript';
+      return codeContent ? <CodeBlock code={codeContent} language={lang} /> : null;
     },
+    image: ({ value }: any) => {
+      if (!value?.asset?.url) return null;
+      return (
+        <img 
+          src={value.asset.url} 
+          alt={value.alt || ''} 
+          className="my-4 rounded-lg max-w-full"
+        />
+      );
+    },
+  },
+  block: {
+    normal: ({ children }: { children?: ReactNode }) => <p className="my-2">{children}</p>,
+    h1: ({ children }: { children?: ReactNode }) => <h1 className="text-2xl font-bold my-4">{children}</h1>,
+    h2: ({ children }: { children?: ReactNode }) => <h2 className="text-xl font-semibold my-3">{children}</h2>,
+    h3: ({ children }: { children?: ReactNode }) => <h3 className="text-lg font-medium my-2">{children}</h3>,
+  },
+  list: {
+    bullet: ({ children }: { children?: ReactNode }) => <ul className="list-disc ml-6 my-2">{children}</ul>,
+    number: ({ children }: { children?: ReactNode }) => <ol className="list-decimal ml-6 my-2">{children}</ol>,
+  },
+  listItem: {
+    bullet: ({ children }: { children?: ReactNode }) => <li className="my-1">{children}</li>,
+    number: ({ children }: { children?: ReactNode }) => <li className="my-1">{children}</li>,
   },
 }
 
@@ -72,7 +97,7 @@ export default function QAItem({ question, answer }: QAItemProps) {
       </button>
       {expanded && (
         <div className="border-t border-slate-600 px-4 py-3 text-sm text-slate-300">
-          <PortableText value={answer} components={portableTextComponents} />
+          <PortableText value={Array.isArray(answer) ? answer : [answer]} components={portableTextComponents} />
         </div>
       )}
     </div>

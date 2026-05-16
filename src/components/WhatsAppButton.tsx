@@ -10,7 +10,7 @@ export const WhatsAppButton = () => {
 
   return (
     <motion.div
-      className="fixed bottom-6 right-6 z-[9999] pointer-events-none"
+      className="fixed top-20 right-2 z-[9999] pointer-events-none"
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ delay: 1, duration: 0.4, ease: "easeOut" }}
@@ -26,13 +26,13 @@ export const WhatsAppButton = () => {
           rel="noopener noreferrer"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="relative flex items-center justify-center w-14 h-14 bg-green-500 rounded-full shadow-lg hover:bg-green-600 transition-colors cursor-pointer"
+          className="relative flex items-center justify-center w-10 h-10 bg-green-500 rounded-full shadow-lg hover:bg-green-600 transition-colors cursor-pointer"
           aria-label="Chat on WhatsApp"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
+            width="16"
+            height="16"
             viewBox="0 0 24 24"
             fill="white"
           >

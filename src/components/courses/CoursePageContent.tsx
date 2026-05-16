@@ -57,10 +57,41 @@ function CodeBlock({ code, language }: { code: string; language?: string }) {
 const portableTextComponents = {
   types: {
     code: ({ value }: any) => {
-      const codeContent = value?.code || value || ''
-      const lang = value?.language || 'javascript'
-      return <CodeBlock code={codeContent} language={lang} />
+      if (!value) return null;
+      let codeContent = '';
+      let lang = 'javascript';
+      if (typeof value === 'string') {
+        codeContent = value;
+      } else if (typeof value === 'object') {
+        codeContent = value?.code || value?.sourceCode || value?.content || '';
+        lang = value?.language || value?.programmingLanguage || 'javascript';
+      }
+      return codeContent ? <CodeBlock code={codeContent} language={lang} /> : null;
     },
+    image: ({ value }: any) => {
+      if (!value?.asset?.url) return null;
+      return (
+        <img 
+          src={value.asset.url} 
+          alt={value.alt || ''} 
+          className="my-4 rounded-lg max-w-full"
+        />
+      );
+    },
+  },
+  block: {
+    normal: ({ children }: { children: any }) => <p className="my-2">{children}</p>,
+    h1: ({ children }: { children: any }) => <h1 className="text-2xl font-bold my-4">{children}</h1>,
+    h2: ({ children }: { children: any }) => <h2 className="text-xl font-semibold my-3">{children}</h2>,
+    h3: ({ children }: { children: any }) => <h3 className="text-lg font-medium my-2">{children}</h3>,
+  },
+  list: {
+    bullet: ({ children }: { children: any }) => <ul className="list-disc ml-6 my-2">{children}</ul>,
+    number: ({ children }: { children: any }) => <ol className="list-decimal ml-6 my-2">{children}</ol>,
+  },
+  listItem: {
+    bullet: ({ children }: { children: any }) => <li className="my-1">{children}</li>,
+    number: ({ children }: { children: any }) => <li className="my-1">{children}</li>,
   },
 }
 
@@ -302,13 +333,13 @@ export default function CoursePageContent({ course }: CoursePageContentProps) {
         </div>
 
         {/* Right Answer Content - Scrollable */}
-        <div ref={contentRef} className="flex-1 overflow-y-auto ml-6">
+        <div ref={contentRef} className="flex-1 w-full overflow-y-auto overflow-x-auto px-2">
           {course.thumbnail && (
-            <div className="relative h-48 w-full rounded-xl overflow-hidden mb-6 bg-gray-100">
+            <div className="relative h-48 w-full rounded-xl  lg:mb-6  mb-3 bg-gray-100 rounded-t-2xl">
               <img
                 src={course.thumbnail.asset.url}
                 alt={course.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover rounded-xl"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               <div className="absolute bottom-4 left-4 text-white">
@@ -323,7 +354,7 @@ export default function CoursePageContent({ course }: CoursePageContentProps) {
           )}
 
           {course.description && (
-            <div className="mb-8 p-6 bg-gray-50 rounded-xl border border-gray-200">
+            <div className="lg:mb-8 mb-4 lg:p-6 p-4 bg-gray-50 rounded-xl border border-gray-200">
               <p className="text-gray-700">
                 {course.description[0]?.children?.[0]?.text || ''}
               </p>
@@ -334,8 +365,8 @@ export default function CoursePageContent({ course }: CoursePageContentProps) {
           {course.topics && course.topics.length > 0 ? (
             <div className="space-y-6">
               {course.topics.map((topic: any, topicIdx: number) => (
-                <div key={topic._id} className="rounded-xl border border-gray-200 overflow-hidden">
-                  <div className="bg-gray-100 px-6 py-3 border-b border-gray-200">
+                <div key={topic._id} className="rounded-xl border border-gray-200 overflow-auto">
+                  <div className="bg-gray-100 lg:px-6 px-4 lg:py-3 py-2 border-b border-gray-200">
                     <h3 className="font-bold text-gray-800">
                       {topicIdx + 1}. {topic.title}
                     </h3>
@@ -350,7 +381,7 @@ export default function CoursePageContent({ course }: CoursePageContentProps) {
                           ref={(el) => {
                             if (el) questionRefs.current.set(qa._id, el);
                           }}
-                          className={`p-6 transition ${
+                          className={`lg:p-6 p-4 transition ${
                             isActive ? 'bg-blue-50' : 'hover:bg-gray-50'
                           }`}
                         >
@@ -364,7 +395,12 @@ export default function CoursePageContent({ course }: CoursePageContentProps) {
                                   
                                 </div>
                                 <div className="flex-1 text-gray-600 text-sm">
-                                  {qa.answer && <PortableText value={qa.answer} components={portableTextComponents} />}
+                                  {qa.answer && (
+                                    <PortableText 
+                                      value={Array.isArray(qa.answer) ? qa.answer : [qa.answer]} 
+                                      components={portableTextComponents as any} 
+                                    />
+                                  )}
                                 </div>
                               </div>
                             </div>

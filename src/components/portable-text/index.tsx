@@ -5,8 +5,19 @@ import Image from "next/image";
 
 export const portableTextComponents: PortableTextComponents = {
   types: {
+    code: ({ value }: any) => {
+      if (!value || typeof value !== 'object') return null;
+      const codeContent = value?.code || '';
+      const lang = value?.language || 'javascript';
+      return codeContent ? (
+        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto">
+          <code>{codeContent}</code>
+        </pre>
+      ) : null;
+    },
     image: ({ value }) => {
       const { asset, alt } = value;
+      if (!asset?.url) return null;
       return (
         <Image
           src={asset?.url}
