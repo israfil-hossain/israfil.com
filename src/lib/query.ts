@@ -39,7 +39,7 @@ export async function getJob() {
 
 export async function getProjects() {
   return client.fetch(
-    groq`*[_type == "project"]{
+    groq`*[_type in ["project", "flowentechProject", "clientProject"]]{
       _id, 
       title, 
       description,
@@ -71,7 +71,7 @@ export async function getProjects() {
 
 export async function getFeaturedProjects() {
   return client.fetch(
-    groq`*[_type == "project" && isFeatured == true]{
+    groq`*[_type in ["project", "flowentechProject", "clientProject"] && isFeatured == true]{
       _id, 
       title, 
       description,
@@ -103,7 +103,7 @@ export async function getFeaturedProjects() {
 
 export async function getSingleProject(slug: string) {
   return client.fetch(
-    groq`*[_type == "project" && slug.current == $slug][0]{
+    groq`*[_type in ["project", "flowentechProject", "clientProject"] && slug.current == $slug][0]{
       _id, 
       title, 
       description,
