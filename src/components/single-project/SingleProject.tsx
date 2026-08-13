@@ -8,7 +8,6 @@ import { useQuery } from "@tanstack/react-query";
 import { portableTextComponents } from "../portable-text";
 import { PortableText } from "next-sanity";
 import Loader from "../ui/loader";
-import { Container } from "../Container";
 import Link from "next/link";
 import { ArrowLeftIcon } from "../ui/arrow-left";
 import { Testimonials } from "../testimonials/Testimonials";
@@ -42,9 +41,8 @@ export function SingleProduct({ slug }: { slug: string }) {
   if (isError || !project) return <div>Something went wrong.</div>;
 
   return (
-    <Container>
-      <div className="">
-        <Link
+    <div>
+      <Link
           type="button"
           href="/projects"
           aria-label="Go back to articles"
@@ -88,7 +86,7 @@ export function SingleProduct({ slug }: { slug: string }) {
           ))}
         </div>
 
-        <div className="flex lg:flex-row justify-between items-center flex-col mt-20">
+        <div className="flex lg:flex-row justify-between items-center flex-col mt-10">
           <Heading className="font-black mb-2 pb-1">{project?.title}</Heading>
         </div>
 
@@ -130,7 +128,6 @@ export function SingleProduct({ slug }: { slug: string }) {
           testimonials={project.testimonials || []}
           averageRating={project.averageRating || 0}
         />
-      </div>
-    </Container>
+    </div>
   );
 }

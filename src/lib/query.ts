@@ -13,11 +13,11 @@ export async function getProfile() {
       },
       shortBio,
       location,
+      phone,
       fullBio,
       email,
       "resumeURL": resumeURL.asset->url,
-      socialLinks,
-      skills
+      socialLinks
     }`
   );
 }
@@ -157,6 +157,65 @@ export async function getProjectTestimonials(projectId: string) {
   );
 }
 
+// Admin queries - fetch all including unpublished
+export async function getAllCoursesForAdmin() {
+  return client.fetch(
+    groq`*[_type == "course"] | order(order asc) {
+      _id,
+      title,
+      slug,
+      category,
+      isPublished,
+      order,
+      publishedAt,
+      "topicCount": count(*[_type == "courseTopic" && course._ref == ^._id])
+    }`
+  );
+}
+
+export async function getSingleCourseForAdmin(courseId: string) {
+  return client.fetch(
+    groq`*[_type == "course" && _id == $courseId][0]{
+      _id,
+      title,
+      slug,
+      description,
+      category,
+      isPublished,
+      order,
+      publishedAt
+    }`,
+    { courseId }
+  );
+}
+
+export async function getTopicsByCourse(courseId: string) {
+  return client.fetch(
+    groq`*[_type == "courseTopic" && course._ref == $courseId] | order(order asc) {
+      _id,
+      title,
+      slug,
+      order,
+      isPublished,
+      "questionCount": count(*[_type == "questionAnswer" && topic._ref == ^._id])
+    }`,
+    { courseId }
+  );
+}
+
+export async function getQuestionsByTopic(topicId: string) {
+  return client.fetch(
+    groq`*[_type == "questionAnswer" && topic._ref == $topicId] | order(order asc) {
+      _id,
+      question,
+      answer,
+      order,
+      isPublished
+    }`,
+    { topicId }
+  );
+}
+
 
 export async function getTemplates() {
   return client.fetch(
@@ -234,6 +293,28 @@ export async function getSingleTemplate(slug: string) {
   );
 }
 
+export async function getSkillCategories() {
+  return client.fetch(
+    groq`*[_type == "skillCategory"] | order(order asc) {
+      _id,
+      title,
+      order
+    }`
+  );
+}
+
+export async function getSkills() {
+  return client.fetch(
+    groq`*[_type == "skill"] | order(order asc) {
+      _id,
+      name,
+      order,
+      "icon": icon.asset->url,
+      category->{ _id, title, order }
+    }`
+  );
+}
+
 export async function getPosts() {
   return client.fetch(
     groq`*[_type == "post"] | order(publishedAt desc) {
@@ -294,7 +375,7 @@ export async function getCourses() {
       category,
       publishedAt,
       order,
-      "topics": topics[]->{_id, title}
+      "topicCount": count(*[_type == "courseTopic" && course._ref == ^._id && isPublished == true])
     }`
   );
 }

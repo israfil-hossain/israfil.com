@@ -1,11 +1,11 @@
 import { getCourses } from '@/lib/query'
-import CourseCard from '@/components/courses/CourseCard'
 import { Metadata } from 'next'
 import { generatePageMeta } from '@/lib/seo'
 import { Container } from '@/components/Container'
 import { Heading } from '@/components/Heading'
 import { Paragraph } from '@/components/Paragraph'
 import { Highlight } from '@/components/Highlight'
+import CourseGrid from '@/components/courses/CourseGrid'
 
 export const revalidate = 60
 
@@ -27,17 +27,7 @@ export default async function CoursesPage() {
         to help you master web development, programming, and technology concepts.
       </Paragraph>
 
-      {courses?.length === 0 ? (
-        <div className="text-center py-20">
-          <p className="text-secondary text-lg">No notes available yet. Check back soon!</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-          {courses.map((course: any) => (
-            <CourseCard key={course._id} course={course} />
-          ))}
-        </div>
-      )}
+      <CourseGrid courses={courses || []} />
     </Container>
   )
 }

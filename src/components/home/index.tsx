@@ -4,7 +4,7 @@ import { Container } from "@/components/Container";
 import { Heading } from "@/components/Heading";
 import { Highlight } from "@/components/Highlight";
 import { Paragraph } from "@/components/Paragraph";
-import { TechStack } from "@/components/TechStack";
+import { SkillTabs } from "@/components/SkillTabs";
 
 import Link from "next/link";
 
@@ -13,14 +13,18 @@ import { Contact } from "../Contact";
 import { useState } from "react";
 import Image from "next/image";
 import { WorkingProducts } from "../projects/ProductsWorking";
+import { PortableText } from "@portabletext/react";
+import { portableTextComponents } from "../portable-text";
 import { FeaturedProducts } from "../projects/FeaturedProducts";
 
 interface HomeComponentProps {
   profileData?: any;
   projectData?: any[];
+  skillCategories?: any[];
+  skills?: any[];
 }
 
-export default function HomeComponent({ profileData: serverProfileData, projectData: serverProjectData }: HomeComponentProps) {
+export default function HomeComponent({ profileData: serverProfileData, projectData: serverProjectData, skillCategories = [], skills = [] }: HomeComponentProps) {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const profile = serverProfileData;
@@ -74,7 +78,7 @@ export default function HomeComponent({ profileData: serverProfileData, projectD
           </Paragraph>
           <Paragraph className="max-w-xl mt-4">
             {profile?.fullBio ? (
-              profile?.fullBio
+              <PortableText value={profile.fullBio} components={portableTextComponents} />
             ) : (
               <>
                 {" "}
@@ -109,29 +113,7 @@ export default function HomeComponent({ profileData: serverProfileData, projectD
         </div>
       </div>
 
-      <Heading as="h2" className="font-black text-lg mt-5">
-        Skills
-      </Heading>
-      <div className="flex flex-wrap gap-2 mt-3">
-        {profile?.skills?.length > 0 ? (
-          profile.skills.map((skill: any, index: number) => (
-            <span
-              key={index}
-              className="px-3 py-1 bg-gray-200 rounded-lg text-sm"
-            >
-              {skill}
-            </span>
-          ))
-        ) : (
-          <>
-            <span className="px-3 py-1 bg-gray-200 rounded-lg text-sm">React</span>
-            <span className="px-3 py-1 bg-gray-200 rounded-lg text-sm">Next.js</span>
-            <span className="px-3 py-1 bg-gray-200 rounded-lg text-sm">TypeScript</span>
-            <span className="px-3 py-1 bg-gray-200 rounded-lg text-sm">Node.js</span>
-            <span className="px-3 py-1 bg-gray-200 rounded-lg text-sm">Sanity</span>
-          </>
-        )}
-      </div>
+      <SkillTabs categories={skillCategories} skills={skills} />
 
       {featuredProjects.length > 0 && (
         <>
@@ -157,8 +139,6 @@ export default function HomeComponent({ profileData: serverProfileData, projectD
         What I&apos;ve been Done
       </Heading>
       <Products products={portfolioProjects} />
-
-      <TechStack />
     </Container>
   );
 }

@@ -35,7 +35,7 @@ export default function CourseCard({ course }: CourseCardProps) {
             <Truncate text={course.description[0]?.children?.[0]?.text || ''} limit={80} className="text-sm text-secondary mt-2" />
           )}
           <div className="mt-4 flex items-center justify-between text-xs text-gray-400">
-            <span>{course.topics?.length || 0} topics</span>
+            <span>{course.topicCount || 0} topics</span>
             <span className="text-blue-600 group-hover:translate-x-1 transition-transform">Read →</span>
           </div>
         </div>
