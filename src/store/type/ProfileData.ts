@@ -5,14 +5,29 @@ export interface SocialLink {
   icon: string;
   href: string;
 }
+
+export interface SkillCategory {
+  _id: string;
+  title: string;
+  order: number;
+}
+
+export interface Skill {
+  _id: string;
+  name: string;
+  icon?: string;
+  order: number;
+  category: SkillCategory;
+}
+
 export interface ProfileData {
     fullName: string;
     shortBio: string;
     email: string;
-    socialLinks: SocialLink[]; 
+    phone: string;
+    socialLinks: SocialLink[];
     fullBio: string | null;
     resumeURL: string | null;
-    skills: string[];
     _id: string;
     headline: string;
     profileImage: {
@@ -21,7 +36,7 @@ export interface ProfileData {
     };
     location: string;
   }
-  
+
   export interface ProfileStore {
     profileData: ProfileData | null;
     setProfileData: (data: ProfileData) => void;

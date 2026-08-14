@@ -74,6 +74,7 @@ export default async function RootLayout({
       <link rel="manifest" href="/site.webmanifest" />
       <link rel="canonical" href={SITE_URL} />
       <body
+        suppressHydrationWarning
         className={twMerge(
           inter.className,
           "flex antialiased h-screen overflow-hidden bg-gray-100"

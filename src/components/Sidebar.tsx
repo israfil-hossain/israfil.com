@@ -155,13 +155,21 @@ const SidebarHeader = ({
   return (
     <Link href="/profile">
       <div className="flex space-x-2 border-b-2 border-gray-300 pb-5 ">
-        <Image
-          src={"/israfil-hossain-logo.png"}
-          alt="Avatar"
-          height="50"
-          width="50"
-          className="object-cover w-[43px] h-[48px] object-top rounded-full flex-shrink-0"
-        />
+        {profileImage ? (
+          <Image
+            src={profileImage}
+            alt={fullName || "Avatar"}
+            height="50"
+            width="50"
+            className="object-cover w-[43px] h-[48px] object-top rounded-full flex-shrink-0"
+          />
+        ) : (
+          <div className="w-[43px] h-[48px] rounded-full bg-slate-200 flex items-center justify-center flex-shrink-0">
+            <span className="text-lg font-bold text-slate-500">
+              {fullName?.charAt(0) || "I"}
+            </span>
+          </div>
+        )}
         <div>
           <div className="flex text-sm flex-col mt-2">
             <p className="font-bold text-primary">{fullName || "Israfil"}</p>
