@@ -1,8 +1,16 @@
 'use client'
 
-import { useState, useRef, useMemo, useCallback } from 'react'
-import { PortableText } from '@portabletext/react'
-import { markdownToPortableText } from '@/lib/markdown-to-portabletext'
+import { useEditor, EditorContent } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+import Placeholder from '@tiptap/extension-placeholder'
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+import Link from '@tiptap/extension-link'
+import { common, createLowlight } from 'lowlight'
+import { useEffect, useCallback, useState } from 'react'
+import { tiptapToPortableText } from '@/lib/tiptap-to-portabletext'
+import { portableTextToTiptap } from '@/lib/portable-text-to-tiptap'
+
+const lowlight = createLowlight(common)
 
 interface RichTextEditorProps {
   value: any[]
@@ -11,103 +19,86 @@ interface RichTextEditorProps {
   error?: string
 }
 
-const portableTextComponents = {
-  types: {
-    code: ({ value }: any) => {
-      if (!value) return null
-      const codeContent = value?.code || ''
-      const lang = value?.language || 'javascript'
-      return codeContent ? (
-        <div className="relative overflow-hidden rounded-lg bg-slate-900 my-3">
-          <div className="bg-slate-800 px-3 py-1.5">
-            <span className="text-xs font-medium text-emerald-400">{lang}</span>
-          </div>
-          <pre className="overflow-x-auto p-3 text-xs text-slate-300">
-            <code>{codeContent}</code>
-          </pre>
-        </div>
-      ) : null
-    },
-  },
-  block: {
-    normal: (props: any) => <p className="my-1 text-sm">{props.children}</p>,
-    h1: (props: any) => <h1 className="text-xl font-bold my-2">{props.children}</h1>,
-    h2: (props: any) => <h2 className="text-lg font-semibold my-2">{props.children}</h2>,
-    h3: (props: any) => <h3 className="text-base font-medium my-1.5">{props.children}</h3>,
-    blockquote: (props: any) => (
-      <blockquote className="border-l-4 border-gray-300 pl-4 my-2 text-gray-600 italic">{props.children}</blockquote>
-    ),
-  },
-  list: {
-    bullet: (props: any) => <ul className="list-disc ml-5 my-1 text-sm">{props.children}</ul>,
-    number: (props: any) => <ol className="list-decimal ml-5 my-1 text-sm">{props.children}</ol>,
-  },
-} as any
+function ToolbarButton({
+  onClick,
+  active,
+  disabled,
+  children,
+  title,
+}: {
+  onClick: () => void
+  active?: boolean
+  disabled?: boolean
+  children: React.ReactNode
+  title: string
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      title={title}
+      className={`p-1.5 rounded text-sm font-medium transition-colors ${
+        active
+          ? 'bg-blue-100 text-blue-700'
+          : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+      } ${disabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}`}
+    >
+      {children}
+    </button>
+  )
+}
 
-function portableTextToMarkdown(blocks: any[]): string {
-  if (!blocks || !Array.isArray(blocks)) return ''
-
-  return blocks
-    .map((block) => {
-      if (block._type === 'code') {
-        return `\`\`\`${block.language || ''}\n${block.code || ''}\n\`\`\``
-      }
-
-      if (block._type !== 'block') return ''
-
-      const indent = block.level ? '  '.repeat(block.level - 1) : ''
-      const prefix = block.listItem === 'bullet' ? `${indent}- ` : block.listItem === 'number' ? `${indent}1. ` : ''
-
-      const text = (block.children || [])
-        .map((child: any) => {
-          let t = child.text || ''
-          if (child.marks?.includes('strong')) t = `**${t}**`
-          if (child.marks?.includes('em')) t = `*${t}*`
-          if (child.marks?.includes('code')) t = `\`${t}\``
-          return t
-        })
-        .join('')
-
-      if (block.style === 'h1') return `# ${text}`
-      if (block.style === 'h2') return `## ${text}`
-      if (block.style === 'h3') return `### ${text}`
-      if (block.style === 'blockquote') return `> ${text}`
-
-      return `${prefix}${text}`
-    })
-    .join('\n')
+function ToolbarDivider() {
+  return <div className="w-px h-6 bg-gray-200 mx-1" />
 }
 
 export default function RichTextEditor({ value, onChange, label, error }: RichTextEditorProps) {
-  const [mode, setMode] = useState<'write' | 'preview'>('write')
-  const [markdown, setMarkdown] = useState(() => portableTextToMarkdown(value || []))
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const [isReady, setIsReady] = useState(false)
 
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      const newMarkdown = e.target.value
-      setMarkdown(newMarkdown)
-      const portableText = markdownToPortableText(newMarkdown)
+  const editor = useEditor({
+    extensions: [
+      StarterKit.configure({
+        codeBlock: false,
+      }),
+      CodeBlockLowlight.configure({
+        lowlight,
+      }),
+      Placeholder.configure({
+        placeholder: 'Start writing your answer...',
+      }),
+      Link.configure({
+        openOnClick: false,
+      }),
+    ],
+    content: portableTextToTiptap(value || []),
+    onUpdate: ({ editor }) => {
+      const json = editor.getJSON()
+      const portableText = tiptapToPortableText(json as any)
       onChange(portableText)
     },
-    [onChange]
-  )
+    editorProps: {
+      attributes: {
+        class: 'prose prose-sm sm:prose max-w-none focus:outline-none min-h-[300px] px-4 py-3',
+      },
+    },
+  })
 
-  const handleTab = useCallback((e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Tab') {
-      e.preventDefault()
-      const textarea = e.currentTarget
-      const start = textarea.selectionStart
-      const end = textarea.selectionEnd
-      const newValue = markdown.substring(0, start) + '  ' + markdown.substring(end)
-      setMarkdown(newValue)
-      setTimeout(() => {
-        textarea.selectionStart = textarea.selectionEnd = start + 2
-      }, 0)
+  useEffect(() => {
+    if (editor) setIsReady(true)
+  }, [editor])
+
+  useEffect(() => {
+    if (editor && isReady) {
+      const currentJSON = JSON.stringify(editor.getJSON())
+      const newJSON = JSON.stringify(portableTextToTiptap(value || []))
+      if (currentJSON !== newJSON) {
+        editor.commands.setContent(portableTextToTiptap(value || []))
+      }
     }
-  }, [markdown])
+  }, [value, editor, isReady])
 
-  const previewBlocks = useMemo(() => markdownToPortableText(markdown), [markdown])
+  if (!editor) return null
 
   return (
     <div>
@@ -119,69 +110,128 @@ export default function RichTextEditor({ value, onChange, label, error }: RichTe
       )}
 
       <div className="border border-gray-300 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent">
-        <div className="flex bg-gray-50 border-b border-gray-200">
-          <button
-            type="button"
-            onClick={() => setMode('write')}
-            className={`px-4 py-2 text-sm font-medium transition-colors ${
-              mode === 'write'
-                ? 'bg-white text-blue-600 border-b-2 border-blue-600'
-                : 'text-gray-500 hover:text-gray-700'
-            }`}
+        {/* Toolbar */}
+        <div className="flex flex-wrap items-center gap-0.5 px-2 py-1.5 bg-gray-50 border-b border-gray-200">
+          {/* Text formatting */}
+          <ToolbarButton
+            onClick={() => editor.chain().focus().toggleBold().run()}
+            active={editor.isActive('bold')}
+            title="Bold"
           >
-            Write
-          </button>
-          <button
-            type="button"
-            onClick={() => setMode('preview')}
-            className={`px-4 py-2 text-sm font-medium transition-colors ${
-              mode === 'preview'
-                ? 'bg-white text-blue-600 border-b-2 border-blue-600'
-                : 'text-gray-500 hover:text-gray-700'
-            }`}
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z" />
+            </svg>
+          </ToolbarButton>
+          <ToolbarButton
+            onClick={() => editor.chain().focus().toggleItalic().run()}
+            active={editor.isActive('italic')}
+            title="Italic"
           >
-            Preview
-          </button>
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10 4h4m-2 0l-4 16m-2 0h4m2-16l4 16" />
+            </svg>
+          </ToolbarButton>
+          <ToolbarButton
+            onClick={() => editor.chain().focus().toggleCode().run()}
+            active={editor.isActive('code')}
+            title="Inline Code"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+            </svg>
+          </ToolbarButton>
+
+          <ToolbarDivider />
+
+          {/* Headings */}
+          <ToolbarButton
+            onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+            active={editor.isActive('heading', { level: 1 })}
+            title="Heading 1"
+          >
+            H1
+          </ToolbarButton>
+          <ToolbarButton
+            onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+            active={editor.isActive('heading', { level: 2 })}
+            title="Heading 2"
+          >
+            H2
+          </ToolbarButton>
+          <ToolbarButton
+            onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+            active={editor.isActive('heading', { level: 3 })}
+            title="Heading 3"
+          >
+            H3
+          </ToolbarButton>
+
+          <ToolbarDivider />
+
+          {/* Lists */}
+          <ToolbarButton
+            onClick={() => editor.chain().focus().toggleBulletList().run()}
+            active={editor.isActive('bulletList')}
+            title="Bullet List"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </ToolbarButton>
+          <ToolbarButton
+            onClick={() => editor.chain().focus().toggleOrderedList().run()}
+            active={editor.isActive('orderedList')}
+            title="Numbered List"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M7 6h13M7 12h13M7 18h13M3 6h.01M3 12h.01M3 18h.01" />
+            </svg>
+          </ToolbarButton>
+
+          <ToolbarDivider />
+
+          {/* Block elements */}
+          <ToolbarButton
+            onClick={() => editor.chain().focus().toggleBlockquote().run()}
+            active={editor.isActive('blockquote')}
+            title="Blockquote"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+            </svg>
+          </ToolbarButton>
+          <ToolbarButton
+            onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+            active={editor.isActive('codeBlock')}
+            title="Code Block"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+            </svg>
+          </ToolbarButton>
+          <ToolbarButton
+            onClick={() => {
+              const url = window.prompt('Enter URL:')
+              if (url) {
+                editor.chain().focus().setLink({ href: url }).run()
+              }
+            }}
+            active={editor.isActive('link')}
+            title="Add Link"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+            </svg>
+          </ToolbarButton>
         </div>
 
-        {mode === 'write' ? (
-          <textarea
-            ref={textareaRef}
-            value={markdown}
-            onChange={handleChange}
-            onKeyDown={handleTab}
-            placeholder="Write your answer in Markdown...
-
-# Heading 1
-## Heading 2
-### Heading 3
-
-- Bullet list item
-1. Numbered list item
-
-**Bold text** and *italic text*
-
-`inline code`
-
-```javascript
-// Code block
-console.log('Hello')
-```"
-            className="w-full px-4 py-3 text-sm outline-none min-h-[300px] font-mono resize-y bg-white"
-          />
-        ) : (
-          <div className="p-4 min-h-[300px] prose prose-sm max-w-none">
-            {previewBlocks.length > 0 ? (
-              <PortableText value={previewBlocks} components={portableTextComponents} />
-            ) : (
-              <p className="text-gray-400 italic">Nothing to preview</p>
-            )}
-          </div>
-        )}
+        {/* Editor content */}
+        <EditorContent editor={editor} />
       </div>
 
       <p className="text-xs text-gray-400 mt-1">
-        Supports Markdown: # headings, - lists, **bold**, *italic*, `code`, ```lang code blocks```
+        Use the toolbar to format: bold, italic, code, headings, lists, blockquotes, code blocks, and links.
       </p>
 
       {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
