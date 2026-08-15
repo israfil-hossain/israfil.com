@@ -90,7 +90,9 @@ export default async function SingleBlogPage({ params }: Props) {
       />
 
       <Container>
-        <BlogLayout meta={post}>{renderContent}</BlogLayout>
+        <div className="pt-[10px]">
+          <BlogLayout meta={post}>{renderContent}</BlogLayout>
+        </div>
       </Container>
     </>
   );

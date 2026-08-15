@@ -3,7 +3,7 @@ import { Container } from "@/components/Container";
 import { Heading } from "@/components/Heading";
 import { Metadata } from "next";
 import { generatePageMeta } from "@/lib/seo";
-import { getProfile } from "@/lib/query";
+import { getProfile, getExperiences } from "@/lib/query";
 
 export const revalidate = 60
 
@@ -13,24 +13,31 @@ export const metadata: Metadata = generatePageMeta({
   path: "/about",
 });
 
-async function getProfileData() {
+async function getAboutData() {
   try {
     const profiles = await getProfile();
-    return profiles?.[0] || null;
+    const experiences = await getExperiences();
+    return {
+      profile: profiles?.[0] || null,
+      experiences: experiences || [],
+    };
   } catch (error) {
-    console.error("Error fetching profile for about page:", error);
-    return null;
+    console.error("Error fetching about page data:", error);
+    return {
+      profile: null,
+      experiences: [],
+    };
   }
 }
 
 export default async function AboutPage() {
-  const profile = await getProfileData();
+  const { profile, experiences } = await getAboutData();
 
   return (
     <Container>
       <span className="text-4xl">💬</span>
       <Heading className="font-black">About Me</Heading>
-      <About profileData={profile} />
+      <About profileData={profile} experiences={experiences} />
     </Container>
   );
 }

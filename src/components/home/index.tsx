@@ -31,8 +31,8 @@ export default function HomeComponent({ profileData: serverProfileData, projectD
   const projects = serverProjectData || [];
 
   const featuredProjects = projects.filter((project: any) => project.isFeatured === true);
-  const runningProjects = projects.filter((project: any) => project.isRunning === true);
-  const portfolioProjects = projects.filter((project: any) => project.isRunning !== true);
+  const runningProjects = projects.filter((project: any) => project.isRunning === true && project._type === "project");
+  const portfolioProjects = projects.filter((project: any) => project.isRunning !== true && project._type === "project");
 
   return (
     <Container>
