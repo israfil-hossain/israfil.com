@@ -9,11 +9,13 @@ import SocialLinks from "@/components/social-links/SocialLinks";
 
 interface AboutProps {
   profileData?: any;
+  experiences?: any[];
 }
 
-export default function About({ profileData }: AboutProps) {
+export default function About({ profileData, experiences }: AboutProps) {
   const fullName = profileData?.fullName || "Israfil Hossain";
-  const headline = profileData?.headline || "Full-Stack Software Engineer & Writer";
+  const headline =
+    profileData?.headline || "Full-Stack Software Engineer & Writer";
   const fullBio = profileData?.fullBio;
   const shortBio = profileData?.shortBio;
   const profileImage = profileData?.profileImage?.image;
@@ -37,40 +39,56 @@ export default function About({ profileData }: AboutProps) {
         ) : (
           <>
             <Paragraph>
-              🔰 <Highlight className="bg-yellow-100">Software Engineer with 4+ years</Highlight> of experience in developing scalable
-              web applications in dynamic and collaborative Agile environments.
-              <Highlight className="bg-blue-100">Expertise</Highlight>: JavaScript, React, Next.js, React Native, and state
-              management tools including Zustand, Redux Toolkit, and Context API.
+              🔰{" "}
+              <Highlight className="bg-yellow-100">
+                Software Engineer with 4+ years
+              </Highlight>{" "}
+              of experience in developing scalable web applications in dynamic
+              and collaborative Agile environments.
+              <Highlight className="bg-blue-100">Expertise</Highlight>:
+              JavaScript, React, Next.js, React Native, and state management
+              tools including Zustand, Redux Toolkit, and Context API.
             </Paragraph>
             <Paragraph className="mt-4">
-              {shortBio || "I'm a full-stack developer who loves building products and web apps that can impact millions of lives."}
+              {shortBio ||
+                "I'm a full-stack developer who loves building products and web apps that can impact millions of lives."}
             </Paragraph>
           </>
         )}
 
-        <TimelineDemo />
+        <TimelineDemo experiences={experiences} />
 
         <div className="max-w-4xl">
           <Paragraph className="mt-4">
-            {`🔰 Since the early days of my journey, I've been captivated by the art of crafting exceptional digital experiences. As a developer, I thrive on turning lines of code into functional and elegant solutions. My goal is to not just create software, but to build digital marvels that seamlessly merge form and function.`}
+            {`🔰 I'm a Frontend Engineer with 4+ years of experience building high-performance, scalable, and user-focused web applications. My primary expertise lies in React, Next.js, TypeScript, and modern frontend architecture, where I focus on transforming complex requirements into clean, intuitive, and maintainable digital experiences.`}
           </Paragraph>
+
           <Paragraph className="mt-4">
-            {`🔰 But my journey doesn't stop at coding. With a heart full of words and a mind brimming with ideas, I've ventured into the realm of writing. From tech articles that unravel complex concepts to creative tales that ignite the imagination, I weave words to inform, entertain, and inspire.`}
+            {`🔰 Throughout my career, I've worked on products across SaaS, fintech, logistics, real estate, geospatial platforms, and other business-critical applications. I've had the opportunity to work with complex dashboards, data-heavy interfaces, real-time features, REST and GraphQL APIs, authentication systems, and multi-tenant SaaS architectures.`}
           </Paragraph>
+
           <Paragraph className="mt-4">
-            {`🔰 What sets me apart is my unwavering appreciation for design. I believe that aesthetics and usability go hand in hand. My eye for awesome design ensures that every project I undertake not only works flawlessly under the hood but also looks stunning on the surface.`}
+            {`🔰 I believe great frontend development is more than writing components. It is about understanding the product, designing scalable architecture, optimizing performance, and creating experiences that users genuinely enjoy. I pay close attention to accessibility, responsiveness, performance, component reusability, and clean code.`}
           </Paragraph>
+
           <Paragraph className="mt-4">
-            {`🔰 Beyond the screen, I love traveling and exploring new cultures — it fuels my creativity and brings fresh perspectives to my work. I also enjoy learning about new technologies and experimenting with ideas to build SaaS applications.`}
+            {`🔰 Alongside frontend engineering, I have hands-on experience with Node.js, Express, NestJS, MongoDB, PostgreSQL, Prisma, Docker, and cloud deployment. This full-stack perspective allows me to understand the complete product lifecycle — from designing frontend architecture and APIs to database modeling, authentication, deployment, and scaling.`}
           </Paragraph>
+
           <Paragraph className="mt-4">
-            {`🔰 Through this website, I aim to share my insights, experiences, and creations with you. Whether you're a fellow developer seeking solutions, a fellow writer in search of inspiration, or simply someone who appreciates the finer aspects of design, there's something here for you.`}
+            {`🔰 I'm also passionate about building SaaS products and turning ideas into real-world products. I've worked on and built products involving project management, CRM, HRM, finance, AI-powered workflows, real estate, e-commerce, and other business solutions. I enjoy solving complex engineering problems and finding simple, scalable solutions.`}
           </Paragraph>
+
           <Paragraph className="mt-4">
-            {`🔰 Join me on this journey of bytes and narratives, logic and creativity, code and prose. Together, we can explore the boundless possibilities of technology and storytelling, all while reveling in the sheer beauty of thoughtful design.`}
+            {`🔰 I'm continuously exploring new technologies, AI-powered development workflows, system design, performance optimization, and modern software architecture. I enjoy experimenting with new ideas, learning from real-world problems, and building products that can scale beyond the initial implementation.`}
           </Paragraph>
+
           <Paragraph className="mt-4">
-            {`🔰 Thank you for being here, and I can't wait to embark on this adventure with you.`}
+            {`🔰 This website is a collection of my work, experiments, experiences, and ideas. Here, I share the things I've learned while building products, solving engineering challenges, and exploring the ever-evolving world of software development.`}
+          </Paragraph>
+
+          <Paragraph className="mt-4">
+            {`🔰 I'm always excited to collaborate with ambitious teams, founders, and developers to build meaningful products — from an initial idea to a polished, scalable application.`}
           </Paragraph>
         </div>
       </div>
@@ -124,7 +142,10 @@ export default function About({ profileData }: AboutProps) {
             {/* Social Links */}
             {socialLinks && socialLinks.length > 0 && (
               <div className="pt-4 border-t border-gray-100">
-                <SocialLinks socialLinks={socialLinks} className="flex flex-wrap gap-2" />
+                <SocialLinks
+                  socialLinks={socialLinks}
+                  className="flex flex-wrap gap-2"
+                />
               </div>
             )}
           </div>

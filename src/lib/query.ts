@@ -41,6 +41,7 @@ export async function getProjects() {
   return client.fetch(
     groq`*[_type in ["project", "flowentechProject", "clientProject"]]{
       _id, 
+      _type,
       title, 
       description,
       href, 
@@ -299,6 +300,21 @@ export async function getSkillCategories() {
       _id,
       title,
       order
+    }`
+  );
+}
+
+export async function getExperiences() {
+  return client.fetch(
+    groq`*[_type == "experience"] | order(order asc) {
+      _id,
+      title,
+      year,
+      companyName,
+      companyUrl,
+      location,
+      description,
+      isCurrent
     }`
   );
 }
